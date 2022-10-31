@@ -1,63 +1,59 @@
 package com.example.homepagenewspaper;
 
-import DAO.CommentDAO;
-import DAO.NewspaperArticleDAO;
-import DAO.UserDAO;
-import DTO.CommentDTO;
-import DTO.NewspaperArticleDTO;
-import DTO.UserDTO;
+import Entities.CommentEntity;
+import Repositories.CommentRepository;
+import Repositories.NewspaperArticleRepository;
+import Repositories.UserRepository;
+import Entities.NewspaperArticleEntity;
+import Entities.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootTest
 class HomePageNewsPaperApplicationTests {
+    UserEntity user = new UserEntity(25L, "Purr", "Meow", "Любитель", "Котиков", "purr@gmail.com");
+    NewspaperArticleEntity testArticle = new NewspaperArticleEntity(15L, "Статья про " + 0 +" котиков", null, "" + 0 + "шерстяных комочков сладко мурчат", user);
 
     @Test
     void contextLoads() {
     }
 
     @Test
-    public void testAdd(){
+    public void testAddArticles(ApplicationContext ctx){
 
-        NewspaperArticleDTO dto = new NewspaperArticleDTO();
-        NewspaperArticleDAO dao = new NewspaperArticleDAO();
-        dto.setTitle("Заработало?");
-        dao.openSessionWithTransaction();
-        dao.persist(dto);
-        dao.closeSessionWithTransaction();
+        NewspaperArticleRepository newspaperArticleRepository = (NewspaperArticleRepository) ctx.getBean("newspaperArticleRepository");
+        for (int i = 0; i < 5; i++){
+            NewspaperArticleEntity article = new NewspaperArticleEntity();
 
+
+            newspaperArticleRepository.save(article);
+        }
     }
 
     @Test
     public void testGet(){
-        NewspaperArticleDAO dao = new NewspaperArticleDAO();
-        dao.openSessionWithTransaction();
-        NewspaperArticleDTO dto = dao.getArticles(1L);
-        dao.closeSessionWithTransaction();
+
     }
 
     @Test
-    public void testAddUser(){
-        UserDAO dao = new UserDAO();
-        UserDTO dto = new UserDTO();
-        dto.setId(2L);
-        dto.setLogin("First");
-        dto.setPassword("1111");
-        dao.openSessionWithTransaction();
-        dao.persist(dto);
-        dao.closeSessionWithTransaction();
+    @Bean
+    public void testAddUser(ApplicationContext ctx){
+        for (int i = 0; i<3; i++){
+            UserEntity userEntity = new UserEntity(Long.valueOf(i), "пупа" + i, "лупа" + i, "пупа" + i, "лупа" + i, "лупа"+i+"@gmail.com");
+            UserRepository userRepository = (UserRepository)ctx.getBean("userRepository");
+            userRepository.save(userEntity);
+        }
     }
 
     @Test
-    public void testAddComment(){
-        CommentDAO dao = new CommentDAO();
-        CommentDTO dto = new CommentDTO();
-        dto.setDescription("Шикарно!!!");
-        dto.setAuthor("гений");
-        dao.openSessionWithTransaction();
-        dao.persist(dto);
-        dao.closeSessionWithTransaction();
-
+    public void testAddComment(ApplicationContext ctx){
+        for (int i = 10; i < 15; i++) {
+            CommentEntity comment = new CommentEntity(Long.valueOf(i), "" + i + " котят из 10", user);
+            CommentRepository commentRepository = (CommentRepository) ctx.getBean("commentRepository");
+            commentRepository.save(comment);
+        }
     }
 
 }
