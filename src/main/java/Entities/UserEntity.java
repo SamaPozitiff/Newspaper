@@ -2,10 +2,12 @@ package Entities;
 
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.persistence.Id;
 
-
+@Data
 @Entity
 @Table(name= "newspaper_user")
 public class UserEntity {
