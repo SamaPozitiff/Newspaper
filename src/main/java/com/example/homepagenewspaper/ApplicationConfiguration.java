@@ -24,7 +24,7 @@ public class ApplicationConfiguration {
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUsername("postgres");
         dataSource.setPassword("Gironimo248");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/newspaper");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/newspaper?createDatabaseIfNotExist=true");
         return dataSource;
     }
 }

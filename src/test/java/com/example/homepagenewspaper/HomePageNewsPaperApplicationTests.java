@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootTest
 class HomePageNewsPaperApplicationTests {
-    UserEntity user = new UserEntity(25L, "Purr", "Meow", "Любитель", "Котиков", "purr@gmail.com");
-    NewspaperArticleEntity testArticle = new NewspaperArticleEntity(15L, "Статья про " + 0 +" котиков", null, "" + 0 + "шерстяных комочков сладко мурчат", user);
+    UserEntity user = new UserEntity(1L, "Purr", "Meow", "Любитель", "Котиков", "purr@gmail.com");
+    NewspaperArticleEntity testArticle = new NewspaperArticleEntity(2L, "Статья про " + 0 +" котиков", null, "" + 0 + "шерстяных комочков сладко мурчат", user);
 
     @Test
     void contextLoads() {
@@ -25,12 +25,14 @@ class HomePageNewsPaperApplicationTests {
 
         NewspaperArticleRepository newspaperArticleRepository = (NewspaperArticleRepository) ctx.getBean("newspaperArticleRepository");
         for (int i = 0; i < 5; i++){
-            NewspaperArticleEntity article = new NewspaperArticleEntity();
+            NewspaperArticleEntity article = new NewspaperArticleEntity(Long.valueOf(i), "Статья про " + i +" котиков", null, "" + i + "шерстяных комочков сладко мурчат", user);
 
 
             newspaperArticleRepository.save(article);
         }
     }
+
+
 
     @Test
     public void testGet(){
@@ -49,6 +51,8 @@ class HomePageNewsPaperApplicationTests {
 
     @Test
     public void testAddComment(ApplicationContext ctx){
+        UserRepository userRepository = (UserRepository) ctx.getBean("userRepository");
+        userRepository.save(user);
         for (int i = 10; i < 15; i++) {
             CommentEntity comment = new CommentEntity(Long.valueOf(i), "" + i + " котят из 10", user);
             CommentRepository commentRepository = (CommentRepository) ctx.getBean("commentRepository");
