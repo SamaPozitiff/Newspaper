@@ -3,7 +3,7 @@ package com.example.homepagenewspaper;
 import Entities.CommentEntity;
 import Repositories.CommentRepository;
 import Repositories.NewspaperArticleRepository;
-import Repositories.UserRepository;
+import Repositories.UserJPARepository;
 import Entities.NewspaperArticleEntity;
 import Entities.UserEntity;
 import org.junit.jupiter.api.Test;
@@ -44,14 +44,14 @@ class HomePageNewsPaperApplicationTests {
     public void testAddUser(ApplicationContext ctx){
         for (int i = 0; i<3; i++){
             UserEntity userEntity = new UserEntity(Long.valueOf(i), "пупа" + i, "лупа" + i, "пупа" + i, "лупа" + i, "лупа"+i+"@gmail.com");
-            UserRepository userRepository = (UserRepository)ctx.getBean("userRepository");
+            UserJPARepository userRepository = (UserJPARepository)ctx.getBean("userRepository");
             userRepository.save(userEntity);
         }
     }
 
     @Test
     public void testAddComment(ApplicationContext ctx){
-        UserRepository userRepository = (UserRepository) ctx.getBean("userRepository");
+        UserJPARepository userRepository = (UserJPARepository) ctx.getBean("userRepository");
         userRepository.save(user);
         for (int i = 10; i < 15; i++) {
             CommentEntity comment = new CommentEntity(Long.valueOf(i), "" + i + " котят из 10", user);
