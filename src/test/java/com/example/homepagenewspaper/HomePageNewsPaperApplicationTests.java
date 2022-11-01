@@ -1,9 +1,9 @@
 package com.example.homepagenewspaper;
 
 import Entities.CommentEntity;
-import Repositories.CommentRepository;
-import Repositories.NewspaperArticleRepository;
-import Repositories.UserJPARepository;
+import JPARepositories.CommentRepository;
+import JPARepositories.NewspaperArticleRepository;
+import JPARepositories.UserJPARepository;
 import Entities.NewspaperArticleEntity;
 import Entities.UserEntity;
 import org.junit.jupiter.api.Test;

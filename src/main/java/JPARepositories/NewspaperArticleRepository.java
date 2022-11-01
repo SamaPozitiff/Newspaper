@@ -1,4 +1,4 @@
-package Repositories;
+package JPARepositories;
 
 
 import Entities.NewspaperArticleEntity;
