@@ -2,6 +2,7 @@ package Services;
 
 import Entities.UserEntity;
 import Repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,17 +14,21 @@ import java.util.Objects;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    @Autowired
     private UserRepository userRepositoryRest;
+
+
     public UserService(UserRepository userRepositoryRest){
         this.userRepositoryRest = userRepositoryRest;
     }
 
     public List<UserEntity> getAll(){
-        return this.userRepositoryRest.getAll();
+        return userRepositoryRest.getAll();
     }
 
     public UserEntity getByLogin(String login){
-        return this.userRepositoryRest.getByLogin(login);
+        return userRepositoryRest.getByLogin(login);
     }
 
 

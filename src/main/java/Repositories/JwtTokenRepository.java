@@ -1,4 +1,4 @@
-package Security;
+package Repositories;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.DefaultCsrfToken;
+import org.springframework.stereotype.Repository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,10 +20,11 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static org.springframework.http.HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS;
-
+@Repository
 public class JwtTokenRepository implements CsrfTokenRepository {
     @Getter
     private String secret;
+
 
     public JwtTokenRepository(){
         this.secret = "springrest";
@@ -40,7 +42,6 @@ public class JwtTokenRepository implements CsrfTokenRepository {
                     .setIssuedAt(now)
                     .setNotBefore(now)
                     .setExpiration(exp)
-                    .signWith(SignatureAlgorithm.HS256, secret)
                     .compact();
 
 

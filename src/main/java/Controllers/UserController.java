@@ -11,15 +11,15 @@ import java.awt.*;
 import java.util.List;
 @RestController
 public class UserController {
-    private UserService service;
+    private final UserService service;
 
     public UserController(UserService service){
         this.service = service;
     }
 
-    @GetMapping(path = "/", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody List<UserEntity> getAll(){
-        return this.service.getAll();
+        return service.getAll();
     }
 
 

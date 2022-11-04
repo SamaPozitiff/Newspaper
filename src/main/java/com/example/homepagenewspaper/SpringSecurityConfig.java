@@ -1,7 +1,7 @@
 package com.example.homepagenewspaper;
 
 import Security.JwtCsrfFilter;
-import Security.JwtTokenRepository;
+import Repositories.JwtTokenRepository;
 import Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,7 +22,9 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Configuration
 @EnableWebSecurity
-@ComponentScan({"Controllers","Services","Security","Repositories"})
+@EnableJpaRepositories("JPARepositories")
+@EntityScan("Entities")
+@ComponentScan({"Controllers","Services", "Security","Repositories"})
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

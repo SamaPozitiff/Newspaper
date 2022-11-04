@@ -1,13 +1,15 @@
 package Entities;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-
+@Data
 @Entity
 @Table(name = "articles")
 public class NewspaperArticleEntity {

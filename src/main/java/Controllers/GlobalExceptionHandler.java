@@ -1,6 +1,6 @@
 package Controllers;
 
-import Security.JwtTokenRepository;
+import Repositories.JwtTokenRepository;
 import lombok.Getter;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.security.web.csrf.InvalidCsrfTokenException;
