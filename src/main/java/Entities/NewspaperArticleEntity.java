@@ -29,8 +29,10 @@ public class NewspaperArticleEntity {
     private UserEntity author;
     @Column (name = "date")
     private Date publicationDate;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+    @JoinColumn(name = "article_id")
     private List<CommentEntity> comments;
+    @Column(name= "likes")
     private int likes;
 
     public NewspaperArticleEntity(){

@@ -2,9 +2,6 @@ package Entities;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "comments")
@@ -29,6 +26,12 @@ public class CommentEntity {
 
     public CommentEntity(Long id, String description, UserEntity user) {
         this.id = id;
+        this.description = description;
+        this.user = user;
+        this.publicationDate = new Date();
+    }
+
+    public CommentEntity(String description, UserEntity user) {
         this.description = description;
         this.user = user;
         this.publicationDate = new Date();

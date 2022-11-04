@@ -25,7 +25,7 @@ class HomePageNewsPaperApplicationTests {
 
         NewspaperArticleRepository newspaperArticleRepository = (NewspaperArticleRepository) ctx.getBean("newspaperArticleRepository");
         for (int i = 0; i < 5; i++){
-            NewspaperArticleEntity article = new NewspaperArticleEntity(Long.valueOf(i), "Статья про " + i +" котиков", null, "" + i + "шерстяных комочков сладко мурчат", user);
+            NewspaperArticleEntity article = new NewspaperArticleEntity(Long.valueOf(i), "Статья про " + i +" котиков", null, "" + i + "шерстяных комочков сладко мурчат", null);
 
 
             newspaperArticleRepository.save(article);
