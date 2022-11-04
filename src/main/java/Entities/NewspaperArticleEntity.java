@@ -1,13 +1,16 @@
 package Entities;
 
 
+import lombok.Data;
+
+
 import javax.persistence.*;
 import javax.swing.*;
-import java.awt.*;
+
 import java.util.*;
 import java.util.List;
 
-
+@Data
 @Entity
 @Table(name = "articles")
 public class NewspaperArticleEntity {
@@ -44,4 +47,29 @@ public class NewspaperArticleEntity {
         this.comments = new ArrayList<>();
         this.likes = 0;
     }
+
+    public NewspaperArticleEntity(Long id, String title,ImageIcon image, String description, UserEntity author, Date date){
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.description = description;
+        this.author = author;
+        this.publicationDate = date;
+        this.comments = new ArrayList<>();
+        this.likes = 0;
+    }
+
+    public NewspaperArticleEntity(String title, ImageIcon image, String description, UserEntity author) {
+        this.title = title;
+        this.image = image;
+        this.description = description;
+        this.author = author;
+        this.publicationDate = new Date();
+        this.comments = new ArrayList<>();
+    }
+
+    public void addComment(CommentEntity comment){
+        comments.add(comment);
+    }
+
 }
