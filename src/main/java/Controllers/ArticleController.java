@@ -1,7 +1,7 @@
 package Controllers;
 
 
-import Entities.NewspaperArticleEntity;
+import Entities.ArticleEntity;
 import Services.ArticleService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +19,12 @@ public class ArticleController {
     }
 
     @GetMapping(path = "/articles" ,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<NewspaperArticleEntity> getAllArticlesFor24Hours(){
+    public List<ArticleEntity> getAllArticlesFor24Hours(){
         return service.getAllArticlesFor24Hours();
     }
 
     @GetMapping(path = "/last_articles",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<NewspaperArticleEntity> get3LastArticles(){
+    public List<ArticleEntity> get3LastArticles(){
         return service.get3LastArticles();
     }
 

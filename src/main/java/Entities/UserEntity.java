@@ -2,10 +2,13 @@ package Entities;
 
 
 
+import lombok.Data;
+import org.hibernate.annotations.BatchSize;
+
 import javax.persistence.*;
 import javax.persistence.Id;
 
-
+@Data
 @Entity
 @Table(name= "newspaper_user")
 public class UserEntity {

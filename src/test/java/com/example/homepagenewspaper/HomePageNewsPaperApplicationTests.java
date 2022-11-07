@@ -1,10 +1,10 @@
 package com.example.homepagenewspaper;
 
+import Entities.ArticleEntity;
 import Entities.CommentEntity;
 import Repositories.CommentRepository;
-import Repositories.NewspaperArticleRepository;
+import Repositories.ArticleRepository;
 import Repositories.UserRepository;
-import Entities.NewspaperArticleEntity;
 import Entities.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootTest(classes = HomePageNewsPaperApplication.class)
 class HomePageNewsPaperApplicationTests {
     UserEntity user = new UserEntity(1L, "Purr", "Meow", "Любитель", "Котиков", "purr@gmail.com");
-    NewspaperArticleEntity testArticle = new NewspaperArticleEntity(2L, "Статья про " + 0 +" котиков", null, "" + 0 + "шерстяных комочков сладко мурчат", user);
+    ArticleEntity testArticle = new ArticleEntity(2L, "Статья про " + 0 +" котиков", null, "" + 0 + "шерстяных комочков сладко мурчат", user);
 
     @Test
     void contextLoads() {
@@ -23,12 +23,12 @@ class HomePageNewsPaperApplicationTests {
     @Test
     public void testAddArticles(ApplicationContext ctx){
 
-        NewspaperArticleRepository newspaperArticleRepository = (NewspaperArticleRepository) ctx.getBean("newspaperArticleRepository");
+        ArticleRepository articleRepository = (ArticleRepository) ctx.getBean("articleRepository");
         for (int i = 0; i < 5; i++){
-            NewspaperArticleEntity article = new NewspaperArticleEntity(Long.valueOf(i), "Статья про " + i +" котиков", null, "" + i + "шерстяных комочков сладко мурчат", null);
+            ArticleEntity article = new ArticleEntity(Long.valueOf(i), "Статья про " + i +" котиков", null, "" + i + "шерстяных комочков сладко мурчат", null);
 
 
-            newspaperArticleRepository.save(article);
+            articleRepository.save(article);
         }
     }
 

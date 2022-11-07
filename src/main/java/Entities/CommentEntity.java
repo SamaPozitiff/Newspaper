@@ -1,8 +1,13 @@
 package Entities;
 
+import lombok.Data;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
+
+@Data
 @Entity
 @Table(name = "comments")
 public class CommentEntity {
@@ -12,6 +17,7 @@ public class CommentEntity {
     @Column (name = "id")
     private Long id;
     @Column(name = "description")
+    @Size(max = 1000)
     private String description;
     @ManyToOne
     @JoinColumn(name = "id_author")
@@ -35,37 +41,5 @@ public class CommentEntity {
         this.description = description;
         this.user = user;
         this.publicationDate = new Date();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public UserEntity getUser() {
-        return user;
-    }
-
-    public void setUser(UserEntity user) {
-        this.user = user;
-    }
-
-    public Date getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(Date publicationDate) {
-        this.publicationDate = publicationDate;
     }
 }

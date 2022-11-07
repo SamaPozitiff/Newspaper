@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.swing.*;
+import javax.validation.constraints.Size;
 
 import java.util.*;
 import java.util.List;
@@ -13,12 +14,13 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "articles")
-public class NewspaperArticleEntity {
+public class ArticleEntity {
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Long id;
     @Column(name = "title")
+    @Size (max = 255)
     private String title;
     @Column(name = "image")
     private ImageIcon image;
@@ -32,14 +34,12 @@ public class NewspaperArticleEntity {
     @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
     @JoinColumn(name = "article_id")
     private List<CommentEntity> comments;
-    @Column(name= "likes")
-    private int likes;
 
-    public NewspaperArticleEntity(){
+    public ArticleEntity(){
 
     }
 
-    public NewspaperArticleEntity(Long id, String title, ImageIcon image, String description, UserEntity author) {
+    public ArticleEntity(Long id, String title, ImageIcon image, String description, UserEntity author) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -47,10 +47,9 @@ public class NewspaperArticleEntity {
         this.author = author;
         this.publicationDate = new Date();
         this.comments = new ArrayList<>();
-        this.likes = 0;
     }
 
-    public NewspaperArticleEntity(Long id, String title,ImageIcon image, String description, UserEntity author, Date date){
+    public ArticleEntity(Long id, String title, ImageIcon image, String description, UserEntity author, Date date){
         this.id = id;
         this.title = title;
         this.image = image;
@@ -58,10 +57,9 @@ public class NewspaperArticleEntity {
         this.author = author;
         this.publicationDate = date;
         this.comments = new ArrayList<>();
-        this.likes = 0;
     }
 
-    public NewspaperArticleEntity(String title, ImageIcon image, String description, UserEntity author) {
+    public ArticleEntity(String title, ImageIcon image, String description, UserEntity author) {
         this.title = title;
         this.image = image;
         this.description = description;
@@ -70,18 +68,13 @@ public class NewspaperArticleEntity {
         this.comments = new ArrayList<>();
     }
 
-    public NewspaperArticleEntity( String title,ImageIcon image, String description, UserEntity author, Date date){
+    public ArticleEntity(String title, ImageIcon image, String description, UserEntity author, Date date){
         this.title = title;
         this.image = image;
         this.description = description;
         this.author = author;
         this.publicationDate = date;
         this.comments = new ArrayList<>();
-        this.likes = 0;
-    }
-
-    public void addComment(CommentEntity comment){
-        comments.add(comment);
     }
 
 }
