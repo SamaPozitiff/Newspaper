@@ -1,6 +1,7 @@
 package Repositories;
 
 import Entities.NewspaperArticleEntity;
+import Services.ArticleService;
 import com.example.homepagenewspaper.HomePageNewsPaperApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,13 +25,13 @@ public class ArticlesTest {
         NewspaperArticleEntity article2 = new NewspaperArticleEntity(2L, "заголовок2", null, "бла бла бла", null, date.getTime());
         NewspaperArticleEntity article3 = new NewspaperArticleEntity(3L, "заголовок3", null, "бла бла бла", null);
         NewspaperArticleEntity article4 = new NewspaperArticleEntity(4L, "заголовок4", null, "бла бла бла", null, date3.getTime());
-        NewspaperArticleRepository repository = (NewspaperArticleRepository) ctx.getBean("newspaperArticleRepository");
-        repository.save(article1);
-        repository.save(article2);
-        repository.save(article3);
-        repository.save(article4);
+        ArticleService service = (ArticleService) ctx.getBean("articleService");
+        service.save(article1);
+        service.save(article2);
+        service.save(article3);
+        service.save(article4);
         List<NewspaperArticleEntity> expect = Arrays.asList(article3,article1);
-        List<NewspaperArticleEntity> result = repository.findAllArticlesForLast24Hours();
+        List<NewspaperArticleEntity> result = service.getAllArticlesFor24Hours();
 
         Assertions.assertTrue(compareArticles(expect, result));
     }
@@ -51,5 +52,27 @@ public class ArticlesTest {
 
         }
         return true;
+    }
+
+    @Test
+    public void testGet3LastArticles(ApplicationContext ctx){
+        GregorianCalendar date1 = new GregorianCalendar();
+        date1.add(Calendar.HOUR, -1);
+        GregorianCalendar date2 = new GregorianCalendar();
+        date2.add(GregorianCalendar.HOUR, -2);
+        GregorianCalendar date3 = new GregorianCalendar();
+        date3.add(Calendar.HOUR, -3);
+        NewspaperArticleRepository repository = (NewspaperArticleRepository) ctx.getBean("newspaperArticleRepository");
+        NewspaperArticleEntity article1 = new NewspaperArticleEntity("Было 4 кокоса", null, "один из них упал, осталось 3 кокоса", null);
+        NewspaperArticleEntity article2 = new NewspaperArticleEntity("Было 3 кокоса", null, "один из них упал, осталось 2 кокоса", null, date1.getTime());
+        NewspaperArticleEntity article3 = new NewspaperArticleEntity("Было 2 кокоса", null, "один из них упал, осталcя 1 кокос", null, date2.getTime());
+        NewspaperArticleEntity article4 = new NewspaperArticleEntity("Был 1 кокос", null, "и он упал, нет больше кокосов Т_Т", null, date3.getTime());
+        repository.save(article1);
+        repository.save(article2);
+        repository.save(article3);
+        repository.save(article4);
+        List<NewspaperArticleEntity> expect = Arrays.asList(article1,article2,article3);
+        List<NewspaperArticleEntity> result = repository.findLast3Articles();
+        Assertions.assertTrue(compareArticles(expect,result));
     }
 }

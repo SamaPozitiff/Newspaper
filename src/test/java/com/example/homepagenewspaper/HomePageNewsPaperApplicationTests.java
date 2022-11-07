@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootTest
+@SpringBootTest(classes = HomePageNewsPaperApplication.class)
 class HomePageNewsPaperApplicationTests {
     UserEntity user = new UserEntity(1L, "Purr", "Meow", "Любитель", "Котиков", "purr@gmail.com");
     NewspaperArticleEntity testArticle = new NewspaperArticleEntity(2L, "Статья про " + 0 +" котиков", null, "" + 0 + "шерстяных комочков сладко мурчат", user);

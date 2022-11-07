@@ -70,6 +70,16 @@ public class NewspaperArticleEntity {
         this.comments = new ArrayList<>();
     }
 
+    public NewspaperArticleEntity( String title,ImageIcon image, String description, UserEntity author, Date date){
+        this.title = title;
+        this.image = image;
+        this.description = description;
+        this.author = author;
+        this.publicationDate = date;
+        this.comments = new ArrayList<>();
+        this.likes = 0;
+    }
+
     public void addComment(CommentEntity comment){
         comments.add(comment);
     }
