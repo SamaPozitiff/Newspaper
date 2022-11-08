@@ -22,6 +22,10 @@ public class LikeService {
     }
 
     public boolean isUserLikeThisArticle(long userId, long articleId){
-        return repository.isUserLikeThisArticle(userId, articleId )> 0 ? true : false;
+        return repository.isUserLikeThisArticle(userId, articleId) > 0 ? true : false;
+    }
+
+    public void save (LikeEntity like){
+        repository.save(like);
     }
 }

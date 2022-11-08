@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootTest(classes = HomePageNewsPaperApplication.class)
 class HomePageNewsPaperApplicationTests {
-    UserEntity user = new UserEntity(1L, "Purr", "Meow", "Любитель", "Котиков", "purr@gmail.com");
+    UserEntity user = new UserEntity( "Meow", "Любитель", "Котиков", "purr@gmail.com");
     ArticleEntity testArticle = new ArticleEntity(2L, "Статья про " + 0 +" котиков", null, "" + 0 + "шерстяных комочков сладко мурчат", user);
 
     @Test
@@ -43,7 +43,7 @@ class HomePageNewsPaperApplicationTests {
     @Bean
     public void testAddUser(ApplicationContext ctx){
         for (int i = 0; i<3; i++){
-            UserEntity userEntity = new UserEntity(Long.valueOf(i), "пупа" + i, "лупа" + i, "пупа" + i, "лупа" + i, "лупа"+i+"@gmail.com");
+            UserEntity userEntity = new UserEntity( "лупа" + i, "пупа" + i, "лупа" + i, "лупа"+i+"@gmail.com");
             UserRepository userRepository = (UserRepository)ctx.getBean("userRepository");
             userRepository.save(userEntity);
         }

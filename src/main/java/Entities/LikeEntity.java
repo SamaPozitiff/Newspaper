@@ -11,7 +11,7 @@ public class LikeEntity {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "article_id")
     private ArticleEntity article;
