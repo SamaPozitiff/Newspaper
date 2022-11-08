@@ -1,7 +1,7 @@
-package Repositories;
+package repositories;
 
-import Entities.ArticleEntity;
-import Services.ArticleService;
+import entities.ArticleEntity;
+import services.ArticleService;
 import com.example.homepagenewspaper.HomePageNewsPaperApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

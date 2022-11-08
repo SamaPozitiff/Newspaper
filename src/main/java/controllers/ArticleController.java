@@ -1,8 +1,8 @@
-package Controllers;
+package controllers;
 
 
-import Entities.ArticleEntity;
-import Services.ArticleService;
+import entities.ArticleEntity;
+import services.ArticleService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

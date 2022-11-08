@@ -1,8 +1,8 @@
-package Services;
+package services;
 
-import Entities.ArticleEntity;
-import Entities.LikeEntity;
-import Entities.UserEntity;
+import entities.ArticleEntity;
+import entities.LikeEntity;
+import entities.UserEntity;
 import com.example.homepagenewspaper.HomePageNewsPaperApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 
 @SpringBootTest(classes = HomePageNewsPaperApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -28,7 +27,7 @@ public class LikeServiceTest {
 
     @BeforeAll
     public void usersAndArticles(){
-        user1  = new UserEntity("qwerty", "????", "??????", "ivan@gmail.com");
+        user1  = new UserEntity("qwerty", "", "??????", "ivan@gmail.com");
         user2 = new UserEntity("12345", "??????", "???????", "serg@gmail.com");
         article1 = new ArticleEntity("hello", null, "world", user1);
         article2 = new ArticleEntity("test", null, "test", user2);

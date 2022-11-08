@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages={
-        "com.example.homepagenewspaper", "Repositories", "Entities", "Controllers", "Services"})
+        "com.example.homepagenewspaper", "repositories", "entities", "controllers", "services"})
 public class HomePageNewsPaperApplication {
 
     public static void main(String[] args) {

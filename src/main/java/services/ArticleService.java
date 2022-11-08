@@ -1,8 +1,8 @@
-package Services;
+package services;
 
-import Entities.ArticleEntity;
-import Entities.CommentEntity;
-import Repositories.ArticleRepository;
+import entities.ArticleEntity;
+import entities.CommentEntity;
+import repositories.ArticleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,10 +26,6 @@ public class ArticleService {
 
     public void save(ArticleEntity entity){
         repository.save(entity);
-    }
-
-    public void addComment(ArticleEntity article, CommentEntity comment){
-        article.getComments().add(comment);
     }
 
     public ArticleEntity findById(Long id){

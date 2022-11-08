@@ -1,9 +1,9 @@
-package Services;
+package services;
 
-import Entities.ArticleEntity;
-import Entities.LikeEntity;
-import Entities.UserEntity;
-import Repositories.LikeRepository;
+import entities.ArticleEntity;
+import entities.LikeEntity;
+import entities.UserEntity;
+import repositories.LikeRepository;
 import org.springframework.stereotype.Service;
 
 @Service

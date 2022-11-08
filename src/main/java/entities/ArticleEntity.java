@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 
 import lombok.Data;
@@ -31,9 +31,6 @@ public class ArticleEntity {
     private UserEntity author;
     @Column (name = "date")
     private Date publicationDate;
-    @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
-    @JoinColumn(name = "article_id")
-    private List<CommentEntity> comments;
 
     public ArticleEntity(){
 
@@ -46,7 +43,6 @@ public class ArticleEntity {
         this.description = description;
         this.author = author;
         this.publicationDate = new Date();
-        this.comments = new ArrayList<>();
     }
 
     public ArticleEntity(Long id, String title, ImageIcon image, String description, UserEntity author, Date date){
@@ -56,7 +52,6 @@ public class ArticleEntity {
         this.description = description;
         this.author = author;
         this.publicationDate = date;
-        this.comments = new ArrayList<>();
     }
 
     public ArticleEntity(String title, ImageIcon image, String description, UserEntity author) {
@@ -65,7 +60,6 @@ public class ArticleEntity {
         this.description = description;
         this.author = author;
         this.publicationDate = new Date();
-        this.comments = new ArrayList<>();
     }
 
     public ArticleEntity(String title, ImageIcon image, String description, UserEntity author, Date date){
@@ -74,7 +68,6 @@ public class ArticleEntity {
         this.description = description;
         this.author = author;
         this.publicationDate = date;
-        this.comments = new ArrayList<>();
     }
 
 }

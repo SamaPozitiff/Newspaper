@@ -1,4 +1,4 @@
-package Entities;
+package entities;
 
 import lombok.Data;
 
@@ -20,26 +20,30 @@ public class CommentEntity {
     @Size(max = 1000)
     private String description;
     @ManyToOne
-    @JoinColumn(name = "id_author")
+    @JoinColumn(name = "author_id")
     private UserEntity user;
-    @Column(name = "publicationdate")
+    @Column(name = "date")
     private Date publicationDate;
-
+    @ManyToOne
+    @JoinColumn(name = "article_id")
+    private ArticleEntity article;
 
     public CommentEntity(){
 
     }
 
-    public CommentEntity(Long id, String description, UserEntity user) {
-        this.id = id;
+
+    public CommentEntity(String description, UserEntity user, ArticleEntity article) {
         this.description = description;
         this.user = user;
         this.publicationDate = new Date();
+        this.article = article;
     }
 
-    public CommentEntity(String description, UserEntity user) {
+    public CommentEntity(String description, UserEntity user, Date publicationDate, ArticleEntity article) {
         this.description = description;
         this.user = user;
-        this.publicationDate = new Date();
+        this.publicationDate = publicationDate;
+        this.article = article;
     }
 }

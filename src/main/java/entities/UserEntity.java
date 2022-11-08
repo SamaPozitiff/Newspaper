@@ -1,9 +1,8 @@
-package Entities;
+package entities;
 
 
 
 import lombok.Data;
-import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
 import javax.persistence.Id;

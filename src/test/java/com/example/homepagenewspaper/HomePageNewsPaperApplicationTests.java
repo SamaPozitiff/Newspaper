@@ -1,11 +1,11 @@
 package com.example.homepagenewspaper;
 
-import Entities.ArticleEntity;
-import Entities.CommentEntity;
-import Repositories.CommentRepository;
-import Repositories.ArticleRepository;
-import Repositories.UserRepository;
-import Entities.UserEntity;
+import entities.ArticleEntity;
+import entities.CommentEntity;
+import repositories.CommentRepository;
+import repositories.ArticleRepository;
+import repositories.UserRepository;
+import entities.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -54,7 +54,7 @@ class HomePageNewsPaperApplicationTests {
         UserRepository userRepository = (UserRepository) ctx.getBean("userRepository");
         userRepository.save(user);
         for (int i = 10; i < 15; i++) {
-            CommentEntity comment = new CommentEntity(Long.valueOf(i), "" + i + " котят из 10", user);
+            CommentEntity comment = new CommentEntity("" + i + " котят из 10", user, testArticle);
             CommentRepository commentRepository = (CommentRepository) ctx.getBean("commentRepository");
             commentRepository.save(comment);
         }

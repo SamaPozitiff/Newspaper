@@ -1,4 +1,4 @@
-package Repositories;
+package repositories;
 
 import com.example.homepagenewspaper.HomePageNewsPaperApplication;
 import org.junit.jupiter.api.Test;

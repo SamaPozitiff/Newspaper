@@ -1,6 +1,6 @@
-package Repositories;
+package repositories;
 
-import Entities.LikeEntity;
+import entities.LikeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
