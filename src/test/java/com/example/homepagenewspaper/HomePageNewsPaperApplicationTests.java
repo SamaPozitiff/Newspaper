@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootTest(classes = HomePageNewsPaperApplication.class)
 class HomePageNewsPaperApplicationTests {
     UserEntity user = new UserEntity( "Meow", "Любитель", "Котиков", "purr@gmail.com");
-    ArticleEntity testArticle = new ArticleEntity(2L, "Статья про " + 0 +" котиков", null, "" + 0 + "шерстяных комочков сладко мурчат", user);
+    ArticleEntity testArticle = new ArticleEntity("Статья про " + 0 +" котиков", null, "" + 0 + "шерстяных комочков сладко мурчат", user);
 
     @Test
     void contextLoads() {
@@ -53,6 +53,8 @@ class HomePageNewsPaperApplicationTests {
     public void testAddComment(ApplicationContext ctx){
         UserRepository userRepository = (UserRepository) ctx.getBean("userRepository");
         userRepository.save(user);
+        ArticleRepository articleRepository = (ArticleRepository) ctx.getBean("articleRepository");
+        articleRepository.save(testArticle);
         for (int i = 10; i < 15; i++) {
             CommentEntity comment = new CommentEntity("" + i + " котят из 10", user, testArticle);
             CommentRepository commentRepository = (CommentRepository) ctx.getBean("commentRepository");

@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableJpaRepositories("repositories")
-@EntityScan({"entities", "repositories", "controllers", "services"})
+@EntityScan({"entities"})
 public class ApplicationConfiguration {
 
 
