@@ -14,7 +14,11 @@ public class UserService {
         this.repository = repository;
     }
 
-    public void save(UserEntity user){
-        repository.save(user);
+    public UserEntity save(UserEntity user){
+        return repository.save(user);
+    }
+
+    public UserEntity findById(Long id){
+        return repository.findById(id).get();
     }
 }
