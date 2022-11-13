@@ -17,17 +17,4 @@ public class UserController {
         this.service = service;
     }
 
-    @GetMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody List<UserEntity> getAll(){
-        return service.getAll();
-    }
-
-
-
-    //public String test(){
-    //    return "заработало?";
-    //}
-
-
-
 }

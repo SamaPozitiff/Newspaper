@@ -1,6 +1,7 @@
 package Services;
 
 import Entities.UserEntity;
+import JPARepositories.UserJPARepository;
 import Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,28 +17,25 @@ import java.util.Objects;
 public class UserService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userRepositoryRest;
+    private UserJPARepository userRepository;
 
 
-    public UserService(UserRepository userRepositoryRest){
-        this.userRepositoryRest = userRepositoryRest;
+    public UserService(UserJPARepository userRepository){
+        this.userRepository = userRepository;
     }
 
-    public List<UserEntity> getAll(){
-        return userRepositoryRest.getAll();
-    }
 
-    public UserEntity getByLogin(String login){
-        return userRepositoryRest.getByLogin(login);
+    public UserEntity getByEmail(String email){
+        return userRepository.getUserByEmail(email);
     }
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = getByLogin(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity user = getByEmail(email);
         if (Objects.isNull(user)){
-            throw new UsernameNotFoundException(String.format("User %s is not found", username));
+            throw new UsernameNotFoundException(String.format("User %s is not found", email));
         }
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), true, true, true, true, new HashSet<>());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), true, true, true, true, new HashSet<>());
     }
 }
