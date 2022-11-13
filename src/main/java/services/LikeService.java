@@ -25,7 +25,19 @@ public class LikeService {
         return repository.isUserLikeThisArticle(userId, articleId) > 0 ? true : false;
     }
 
-    public void save (LikeEntity like){
-        repository.save(like);
+    public LikeEntity getLike(Long id){
+        return repository.findById(id).get();
+    }
+
+    public LikeEntity save (LikeEntity like){
+        return repository.save(like);
+    }
+
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
+
+    public Long getLikeId(Long  userId, Long articleId){
+        return repository.getLikeId(userId, articleId);
     }
 }
