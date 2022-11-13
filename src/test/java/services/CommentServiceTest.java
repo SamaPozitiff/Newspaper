@@ -34,9 +34,11 @@ public class CommentServiceTest {
             date.add(Calendar.HOUR, -i);
             CommentEntity comment = new CommentEntity("" + i + " из 10", user1, date.getTime(), article1);
             commentService.save(comment);
-            expect.add(comment);
+            if(i>=0 && i<=2){
+                expect.add(comment);
+            }
         }
-            List result = commentService.getPageCommentsOfArticle(article1.getId());
+            List result = commentService.findCommentsOfArticle(0, article1.getId());
             Assertions.assertTrue(compareArticles(expect, result));
 
 

@@ -18,11 +18,20 @@ public class CommentService {
     }
 
 
-    public void save(CommentEntity comment){
-        repository.save(comment);
+    public CommentEntity save(CommentEntity comment){
+        return repository.save(comment);
     }
 
     public List<CommentEntity> findCommentsOfArticle(Integer page, Long article){
         return  repository.getCommentsOfArticle(article).stream().skip((long) page * COMMENTS_ON_PAGE).limit(COMMENTS_ON_PAGE).collect(Collectors.toList());
+    }
+
+    public void delete(Long commentId){
+
+        repository.deleteById(commentId);
+    }
+
+    public List<CommentEntity> findAllCommentsOfArticle(Long articleId){
+        return repository.getCommentsOfArticle(articleId);
     }
 }

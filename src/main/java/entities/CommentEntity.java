@@ -1,6 +1,8 @@
 package entities;
 
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -25,6 +27,7 @@ public class CommentEntity {
     @Column(name = "date")
     private Date publicationDate;
     @ManyToOne
+
     @JoinColumn(name = "article_id")
     private ArticleEntity article;
 
