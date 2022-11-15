@@ -43,7 +43,7 @@ class HomePageNewsPaperApplicationTests {
     @Bean
     public void testAddUser(ApplicationContext ctx){
         for (int i = 0; i<3; i++){
-            UserEntity userEntity = new UserEntity( "лупа" + i, "пупа" + i, "лупа" + i, "лупа"+i+"@gmail.com");
+            UserEntity userEntity = new UserEntity( "lupa" + i, "пупа" + i, "лупа" + i, "lupa"+i+"@gmail.com");
             UserRepository userRepository = (UserRepository)ctx.getBean("userRepository");
             userRepository.save(userEntity);
         }

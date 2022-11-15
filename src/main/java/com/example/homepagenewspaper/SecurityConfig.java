@@ -3,8 +3,11 @@ package com.example.homepagenewspaper;
 import entities.UserEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import repositories.UserRepository;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
@@ -33,21 +37,21 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain SecurityfilterChain(HttpSecurity http) throws Exception{
         return http
                 .authorizeRequests()
                     .antMatchers("/{article}/comments/add", "/articles/add", "/article/like/add").hasRole("USER")
                     .antMatchers("/", "/**").permitAll()
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .loginProcessingUrl("/authenticate")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
+                .authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+                .exceptionHandling()
                 .and()
+                .formLogin(Customizer.withDefaults())
                     .logout()
                     .logoutSuccessUrl("/")
                 .and()
                     .build();
     }
+
+
 }
