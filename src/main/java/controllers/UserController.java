@@ -18,8 +18,8 @@ public class UserController {
 
 
     @PostMapping(path = "/users/add")
-    public ResponseEntity<UserEntity> addArticle(@RequestParam String email, String password, String firstName, String lastName){
-        return new ResponseEntity<>(userService.save(new UserEntity(password, firstName, lastName, email)), HttpStatus.CREATED);
+    public ResponseEntity<UserEntity> addArticle(@RequestParam String email, String password, String firstName, String lastName, String role){
+        return new ResponseEntity<>(userService.save(new UserEntity(password, firstName, lastName, email, role)), HttpStatus.CREATED);
 
     }
 

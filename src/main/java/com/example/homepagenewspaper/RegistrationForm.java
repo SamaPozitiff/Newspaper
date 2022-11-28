@@ -13,8 +13,10 @@ public class RegistrationForm {
     private String firstName;
     private String secondName;
 
+    private String role;
+
     public UserEntity toUser(PasswordEncoder passwordEncoder){
         return new UserEntity(email, passwordEncoder.encode(password),
-                firstName, secondName);
+                firstName, secondName, role);
     }
 }

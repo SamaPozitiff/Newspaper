@@ -21,24 +21,27 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
+    @Column(name = "email")
+    String email;
     @Column(name = "password")
     String password;
     @Column(name = "first_name")
     String firstName;
     @Column(name = "second_name")
     String secondName;
-    @Column(name = "email")
-    String email;
+    @Column(name = "role")
+    String role;
 
     public UserEntity(){
 
     }
 
-    public UserEntity( String email, String password, String firstName, String secondName) {
+    public UserEntity( String email, String password, String firstName, String secondName, String role) {
         this.password = password;
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;
+        this.role = role;
     }
 
     @Override
