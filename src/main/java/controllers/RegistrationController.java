@@ -1,15 +1,14 @@
 package controllers;
 
 import com.example.homepagenewspaper.RegistrationForm;
+import entities.UserEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import repositories.UserRepository;
 
-@Controller
+@RestController
 @RequestMapping("/register")
 public class RegistrationController {
     private UserRepository userRepository;
@@ -26,8 +25,8 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String processRegistration(RegistrationForm form){
-        userRepository.save(form.toUser(passwordEncoder));
+    public String processRegistration(@RequestParam String email, String password, String firstName, String lastName){
+        userRepository.save(new RegistrationForm(email, password, firstName, lastName).toUser(passwordEncoder));
         return "redirect:/login";
     }
 

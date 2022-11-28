@@ -1,10 +1,12 @@
 package com.example.homepagenewspaper;
 
 import entities.UserEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Data
+@AllArgsConstructor
 public class RegistrationForm {
     private String email;
     private String password;

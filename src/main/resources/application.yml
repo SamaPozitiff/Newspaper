@@ -1,5 +1,5 @@
-security:
-oauth2:
-  resourceserver:
-    jwt:
-      jwk-set-uri: http://localhost:8080/oauth2/jwks
+spring:
+  security:
+    user:
+      email: inna
+      password: 123

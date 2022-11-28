@@ -34,7 +34,7 @@ public class UserEntity implements UserDetails {
 
     }
 
-    public UserEntity(String password, String firstName, String secondName, String email) {
+    public UserEntity( String email, String password, String firstName, String secondName) {
         this.password = password;
         this.firstName = firstName;
         this.secondName = secondName;

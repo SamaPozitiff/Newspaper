@@ -22,9 +22,6 @@ public class ArticleService {
         return repository.findAllArticlesForLast24Hours();
     }
 
-    public List<ArticleEntity> get3LastArticles(){
-        return repository.findLast3Articles();
-    }
 
     public ArticleEntity save(ArticleEntity entity){
         return repository.save(entity);
