@@ -1,28 +1,35 @@
 package services;
 
-import entities.ArticleEntity;
 import entities.LikeEntity;
-import entities.UserEntity;
 import repositories.LikeRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LikeService {
     LikeRepository repository;
-    public LikeService(LikeRepository repository){
+    UserService userService;
+    ArticleService articleService;
+    public LikeService(LikeRepository repository, UserService userService,
+                       ArticleService articleService) {
         this.repository = repository;
+        this.userService = userService;
+        this.articleService = articleService;
     }
 
-    public void addLike(ArticleEntity article, UserEntity user){
-        repository.save(new LikeEntity(article, user));
+    public void likeArticle(Long articleId) {
+       if(isUserLikeThisArticle(articleId)){
+           delete(getLikeId(userService.getIdAuthorizedUser(), articleId));
+       }else {
+           save(new LikeEntity(articleService.findById(articleId), userService.findById(userService.getIdAuthorizedUser())));
+       }
     }
 
     public long getAmountLikesFromArticle(long id){
         return repository.getAmountLikesFromArticle(id);
     }
 
-    public boolean isUserLikeThisArticle(long userId, long articleId){
-        return repository.isUserLikeThisArticle(userId, articleId) > 0 ? true : false;
+    public boolean isUserLikeThisArticle(long articleId){
+        return repository.isUserLikeThisArticle(userService.getIdAuthorizedUser(), articleId) > 0 ? true : false;
     }
 
     public LikeEntity getLike(Long id){

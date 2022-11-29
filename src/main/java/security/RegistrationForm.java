@@ -1,4 +1,4 @@
-package com.example.homepagenewspaper;
+package security;
 
 import entities.UserEntity;
 import lombok.AllArgsConstructor;

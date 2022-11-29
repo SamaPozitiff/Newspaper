@@ -56,7 +56,7 @@ public class LikeServiceTest {
 
     @Test
     public void isUserLikeThisIfDBEmpty(){
-        Assertions.assertEquals(false, likeService.isUserLikeThisArticle(33, 55));
+        Assertions.assertEquals(false, likeService.isUserLikeThisArticle(33));
          }
 
     @Test
@@ -65,7 +65,7 @@ public class LikeServiceTest {
         articleService.save(article1);
         LikeEntity likeEntity = new LikeEntity(article1, user1);
         likeService.save(likeEntity);
-        Assertions.assertEquals(true, likeService.isUserLikeThisArticle(user1.getId(), article1.getId()));
+        Assertions.assertEquals(true, likeService.isUserLikeThisArticle(article1.getId()));
 
     }
 

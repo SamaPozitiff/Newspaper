@@ -18,8 +18,8 @@ public class CommentService {
     }
 
 
-    public CommentEntity save(CommentEntity comment){
-        return repository.save(comment);
+    public void save(CommentEntity comment){
+        repository.save(comment);
     }
 
     public List<CommentEntity> findCommentsOfArticle(Integer page, Long article){
@@ -27,7 +27,6 @@ public class CommentService {
     }
 
     public void delete(Long commentId){
-
         repository.deleteById(commentId);
     }
 

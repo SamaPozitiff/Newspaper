@@ -14,7 +14,7 @@ import java.util.Collection;
 
 @Data
 @Entity
-@Table(name= "newspaper_user")
+@Table(name= "newspaper_users")
 public class UserEntity implements UserDetails {
 
     @Id
@@ -27,8 +27,8 @@ public class UserEntity implements UserDetails {
     String password;
     @Column(name = "first_name")
     String firstName;
-    @Column(name = "second_name")
-    String secondName;
+    @Column(name = "last_name")
+    String lastName;
     @Column(name = "role")
     String role;
 
@@ -36,10 +36,10 @@ public class UserEntity implements UserDetails {
 
     }
 
-    public UserEntity( String email, String password, String firstName, String secondName, String role) {
+    public UserEntity(String email, String password, String firstName, String lastName, String role) {
         this.password = password;
         this.firstName = firstName;
-        this.secondName = secondName;
+        this.lastName = lastName;
         this.email = email;
         this.role = role;
     }

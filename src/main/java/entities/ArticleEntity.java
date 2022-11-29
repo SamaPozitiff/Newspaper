@@ -23,7 +23,7 @@ public class ArticleEntity {
     @Size (max = 255)
     private String title;
     @Column(name = "image")
-    private ImageIcon image;
+    private String image;
     @Column(name = "description")
     private String description;
     @ManyToOne
@@ -36,8 +36,8 @@ public class ArticleEntity {
 
     }
 
-    public ArticleEntity(Long id, String title, ImageIcon image, String description, UserEntity author) {
-        this.id = id;
+
+    public ArticleEntity(String title, String image, String description, UserEntity author) {
         this.title = title;
         this.image = image;
         this.description = description;
@@ -45,24 +45,7 @@ public class ArticleEntity {
         this.publicationDate = new Date();
     }
 
-    public ArticleEntity(Long id, String title, ImageIcon image, String description, UserEntity author, Date date){
-        this.id = id;
-        this.title = title;
-        this.image = image;
-        this.description = description;
-        this.author = author;
-        this.publicationDate = date;
-    }
-
-    public ArticleEntity(String title, ImageIcon image, String description, UserEntity author) {
-        this.title = title;
-        this.image = image;
-        this.description = description;
-        this.author = author;
-        this.publicationDate = new Date();
-    }
-
-    public ArticleEntity(String title, ImageIcon image, String description, UserEntity author, Date date){
+    public ArticleEntity(String title, String image, String description, UserEntity author, Date date){
         this.title = title;
         this.image = image;
         this.description = description;
