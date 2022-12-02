@@ -20,7 +20,9 @@ public class RegistrationController {
     public String registerForm(){
         return "registration";
     }
-
+    /*
+    регистрация нового пользователя
+     */
     @PostMapping
     public String processRegistration(@RequestParam String email, String password, String firstName, String lastName, String role){
         userRepository.save(new RegistrationForm(email, password, firstName, lastName, role).toUser(passwordEncoder));

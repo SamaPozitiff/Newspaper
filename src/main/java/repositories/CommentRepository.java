@@ -13,10 +13,14 @@ import org.springframework.data.domain.Pageable;
 
 
 import java.util.List;
-
+/*
+репозиторий для комментариев
+ */
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
-
+    /*
+    получение всех комментариев к конкретной статье
+     */
     @Query (nativeQuery = true, value = "select * from comments where article_id = :article ORDER BY date DESC;")
     List<CommentEntity> getCommentsOfArticle(@Param("article") Long article);
 

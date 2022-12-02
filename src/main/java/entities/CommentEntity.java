@@ -8,7 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-
+/*
+класс-сущность комментарий
+ */
 @Data
 @Entity
 @Table(name = "comments")

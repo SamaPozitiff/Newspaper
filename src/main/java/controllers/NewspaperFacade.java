@@ -28,6 +28,10 @@ public class NewspaperFacade {
         this.securityConfig = securityConfig;
 
     }
+
+    /*
+    Главная страница
+     */
     public List homepage(){
         List homepage = new ArrayList<>();
         if(securityConfig.isAuthenticated()){
@@ -47,14 +51,21 @@ public class NewspaperFacade {
         return homepage;
     }
 
+    /*
+    получение комментариев
+     */
     public List getCommentsOnArticle(int page, Long articleId){
         return commentService.findCommentsOfArticle(page, articleId);
     }
-
+    /*
+    добавление комментария
+     */
     public void addComment(String description, Long articleId){
         commentService.save(new CommentEntity(description, userService.findById(userService.getIdAuthorizedUser()),articleService.findById(articleId)));
     }
-
+    /*
+    снятие/простановка лайка
+     */
     public void likeArticle(Long articleId){
         likeService.likeArticle(articleId);
     }

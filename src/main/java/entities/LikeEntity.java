@@ -3,7 +3,9 @@ package entities;
 import lombok.Data;
 
 import javax.persistence.*;
-
+/*
+класс-сущность лайк
+ */
 @Data
 @Entity
 @Table(name = "likes")

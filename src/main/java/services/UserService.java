@@ -17,22 +17,34 @@ public class UserService {
         this.repository = repository;
         this.securityConfig = securityConfig;
     }
-
+    /*
+    сохранение пользователя
+     */
     public UserEntity save(UserEntity user){
         return repository.save(user);
     }
-
+    /*
+    найти пользователя по id
+     */
     public UserEntity findById(Long id){
         return repository.findById(id).get();
     }
-
+    /*
+    получить имя и фамилию авторизованного пользователя
+     */
     public String getNameAuthorizedUser(){
         UserEntity authUser = repository.findByEmail(securityConfig.getCurrentUsername());
-        return String.format(new String("%s %s"), authUser.getFirstName(), authUser.getLastName());
+        return String.format("%s %s", authUser.getFirstName(), authUser.getLastName());
     }
-
+    /*
+    получить id авторизованного пользователя
+     */
     public Long getIdAuthorizedUser(){
         UserEntity authUser = repository.findByEmail(securityConfig.getCurrentUsername());
         return authUser.getId();
+    }
+
+    public UserEntity getByEmail(String email){
+        return repository.findByEmail(email);
     }
 }

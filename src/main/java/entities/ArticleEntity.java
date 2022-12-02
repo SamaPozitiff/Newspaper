@@ -10,7 +10,9 @@ import javax.validation.constraints.Size;
 
 import java.util.*;
 import java.util.List;
-
+/*
+класс-сущность статья
+ */
 @Data
 @Entity
 @Table(name = "articles")

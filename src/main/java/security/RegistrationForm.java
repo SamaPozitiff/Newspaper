@@ -14,7 +14,9 @@ public class RegistrationForm {
     private String secondName;
 
     private String role;
-
+    /*
+    создает и возвращает сущность пользователь с зашифрованным паролем
+     */
     public UserEntity toUser(PasswordEncoder passwordEncoder){
         return new UserEntity(email, passwordEncoder.encode(password),
                 firstName, secondName, role);

@@ -2,7 +2,7 @@ package entities;
 
 
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,8 +11,15 @@ import javax.persistence.*;
 import javax.persistence.Id;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Set;
 
-@Data
+/*
+класс-сущность пользователь
+ */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name= "newspaper_users")
 public class UserEntity implements UserDetails {
@@ -29,20 +36,8 @@ public class UserEntity implements UserDetails {
     String firstName;
     @Column(name = "last_name")
     String lastName;
-    @Column(name = "role")
-    String role;
+    private Set<Role> roles;
 
-    public UserEntity(){
-
-    }
-
-    public UserEntity(String email, String password, String firstName, String lastName, String role) {
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.role = role;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

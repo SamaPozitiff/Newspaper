@@ -13,7 +13,9 @@ import javax.sql.DataSource;
 @EntityScan({"entities"})
 public class ApplicationConfiguration {
 
-
+/*
+    Настройки подключения базы данных
+ */
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

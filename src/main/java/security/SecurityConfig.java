@@ -21,16 +21,23 @@ public class SecurityConfig {
 
     @Autowired
     private DataSource dataSource;
-
+    /*
+    шифратор пароля
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    /*
+    получение email текущего авторизованного пользователя
+     */
     public String getCurrentUsername() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return auth.getName();
     }
-
+    /*
+    проверка авторизован ли пользователь
+     */
     public boolean isAuthenticated() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || AnonymousAuthenticationToken.class.
@@ -39,6 +46,7 @@ public class SecurityConfig {
         }
         return authentication.isAuthenticated();
     }
+
     @Bean
     public JdbcUserDetailsManager jdbcUserDetailsManager() {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
@@ -49,7 +57,9 @@ public class SecurityConfig {
         return jdbcUserDetailsManager;
     }
 
-
+    /*
+    настройка доступа приложения
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http

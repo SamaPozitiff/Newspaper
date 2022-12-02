@@ -25,7 +25,9 @@ public class HomePageNewsPaperApplication {
         SpringApplication.run(HomePageNewsPaperApplication.class, args);
 
     }
-
+    /*
+    Заполняет базу данных при запуске приложения
+     */
     @Bean
     public CommandLineRunner runner(PasswordEncoder encoder, ArticleRepository articleRepository, UserRepository userRepository, CommentRepository commentRepository, LikeRepository likeRepository){
         return new CommandLineRunner() {
