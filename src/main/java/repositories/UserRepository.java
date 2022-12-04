@@ -14,6 +14,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     поиск пользователя по email
      */
     @Query (nativeQuery = true,
-            value = "SELECT * FROM newspaper_users where email = usersEmail")
+            value = "SELECT * FROM newspaper_users where email = :email ;")
     UserEntity findByEmail(@Param("email") String usersEmail);
 }

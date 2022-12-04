@@ -1,9 +1,6 @@
 package com.example.homepagenewspaper;
 
-import entities.ArticleEntity;
-import entities.CommentEntity;
-import entities.LikeEntity;
-import entities.UserEntity;
+import entities.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +12,9 @@ import repositories.LikeRepository;
 import repositories.UserRepository;
 
 import javax.swing.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @SpringBootApplication(scanBasePackages={
@@ -34,10 +34,10 @@ public class HomePageNewsPaperApplication {
             @Override
             public void run(String... args) throws Exception {
                 for(int i = 0; i < 10; i++){
-                    UserEntity user = new UserEntity( "user" + i + "@mail.ru", encoder.encode("password"),
+                    UserEntity user = new UserEntity( "user" + i + "@mailru", encoder.encode("password"),
                             "user" + i, "lastname" + i, "ROLE_USER");
                     userRepository.save(user);
-                    ArticleEntity article = new ArticleEntity("" + i + "котяток", "src/resources/image" + i + ".png", "" + i + "часов назад было обнаружено, что котики сладко мурчат", user);
+                    ArticleEntity article = new ArticleEntity("" + i + "котяток", "src/resources/image" + i + "png", "" + i + "часов назад было обнаружено, что котики сладко мурчат", user);
                     articleRepository.save(article);
                     commentRepository.save(new CommentEntity("1" + i + " из 10", user, article));
                     likeRepository.save(new LikeEntity(article, user));

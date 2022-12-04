@@ -1,6 +1,6 @@
 package security;
 
-import entities.Role;
+import entities.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;
@@ -20,12 +20,12 @@ public class JwtAuthentication implements Authentication {
     private boolean authenticated;
     private String email;
     private String firstName;
-    private Set<Role> roles;
+    private String role;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return null;
     }
 
     @Override

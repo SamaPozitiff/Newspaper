@@ -4,7 +4,9 @@ import entities.UserEntity;
 import io.jsonwebtoken.Claims;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import services.UserService;
 
@@ -15,14 +17,15 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final Map<String, String> refreshStorage = new HashMap<>();
     private final JwtProvider jwtProvider;
 
     public JwtResponse login(@NonNull JwtRequest authRequest) throws AuthException {
         final UserEntity user = userService.getByEmail(authRequest.getEmail());
-        if (user.getPassword().equals(authRequest.getPassword())){
+        if (passwordEncoder.matches(authRequest.getPassword(), user.getPassword())){
             final String accessToken = jwtProvider.generateAccessToken(user);
             final String refreshToken = jwtProvider.generateRefreshToken(user);
             refreshStorage.put(user.getEmail(), refreshToken);

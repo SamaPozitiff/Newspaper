@@ -5,6 +5,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import repositories.UserRepository;
 
+import java.util.Collection;
+import java.util.Collections;
+
 @RestController
 @RequestMapping("/register")
 public class RegistrationController {

@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.persistence.Id;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 /*
@@ -22,21 +23,30 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name= "newspaper_users")
-public class UserEntity implements UserDetails {
+public class UserEntity implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
     @Column(name = "email")
-    String email;
+    private String email;
     @Column(name = "password")
-    String password;
+    private String password;
     @Column(name = "first_name")
-    String firstName;
+    private String firstName;
     @Column(name = "last_name")
-    String lastName;
-    private Set<Role> roles;
+    private String lastName;
+    private String role;
+
+    public UserEntity(String email, String password, String firstName, String lastName, String role) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+
+    }
 
 
     @Override
@@ -68,4 +78,5 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
