@@ -29,7 +29,7 @@ public class NewspaperFacade {
 
     }
 
-    /*
+    /**
     Главная страница
      */
     public List homepage(){
@@ -51,20 +51,25 @@ public class NewspaperFacade {
         return homepage;
     }
 
-    /*
+    /**
     получение комментариев
+     @param page - номер страницы
+     @param articleId - id статьи
      */
     public List getCommentsOnArticle(int page, Long articleId){
         return commentService.findCommentsOfArticle(page, articleId);
     }
-    /*
+    /**
     добавление комментария
+     @param description - описание
+     @param articleId - id статьи
      */
     public void addComment(String description, Long articleId){
         commentService.save(new CommentEntity(description, userService.findById(userService.getIdAuthorizedUser()),articleService.findById(articleId)));
     }
-    /*
+    /**
     снятие/простановка лайка
+    @param articleId - id статьи
      */
     public void likeArticle(Long articleId){
         likeService.likeArticle(articleId);

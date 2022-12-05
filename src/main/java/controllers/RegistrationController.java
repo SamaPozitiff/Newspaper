@@ -23,8 +23,13 @@ public class RegistrationController {
     public String registerForm(){
         return "registration";
     }
-    /*
+    /**
     регистрация нового пользователя
+    @param email - электронная почта
+     @param password - пароль
+     @param firstName - имя
+     @param lastName - фамилия
+     @param role - роль
      */
     @PostMapping
     public String processRegistration(@RequestParam String email, String password, String firstName, String lastName, String role){

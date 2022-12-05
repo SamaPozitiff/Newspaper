@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    /*
+    /**
     поиск пользователя по email
+     @param usersEmail - электронная почта пользователя
      */
     @Query (nativeQuery = true,
             value = "SELECT * FROM newspaper_users where email = :email ;")

@@ -25,8 +25,13 @@ public class HomePageNewsPaperApplication {
         SpringApplication.run(HomePageNewsPaperApplication.class, args);
 
     }
-    /*
-    Заполняет базу данных при запуске приложения
+    /**
+     Заполняет базу данных при запуске приложения
+     @param encoder - шифровщик паролей
+     @param articleRepository - репозиторий статей
+     @param userRepository - репозиторий пользователей
+     @param commentRepository - репозиторий комментариев
+     @param likeRepository - репозиторий лайков
      */
     @Bean
     public CommandLineRunner runner(PasswordEncoder encoder, ArticleRepository articleRepository, UserRepository userRepository, CommentRepository commentRepository, LikeRepository likeRepository){
