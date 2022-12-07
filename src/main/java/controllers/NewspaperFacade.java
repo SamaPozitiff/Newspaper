@@ -1,8 +1,13 @@
 package controllers;
 
+import entities.CommentEntity;
+import entities.UserEntity;
+import mappers.*;
+import restDTO.ArticleDTO;
+import restDTO.CommentDTO;
+import restDTO.LikeDTO;
 import security.SecurityConfig;
 import entities.ArticleEntity;
-import entities.CommentEntity;
 import org.springframework.stereotype.Component;
 import services.ArticleService;
 import services.CommentService;
@@ -13,65 +18,77 @@ import java.util.ArrayList;
 import java.util.List;
 @Component
 public class NewspaperFacade {
-    ArticleService articleService;
-    CommentService commentService;
-    LikeService likeService;
-    UserService userService;
-    SecurityConfig securityConfig;
+    private final ArticleService articleService;
+    private final CommentService commentService;
+    private final LikeService likeService;
+    private final UserService userService;
+    private final SecurityConfig securityConfig;
+    private final ArticleMapper articleMapper;
+    private final CommentMapper commentMapper;
+    private final LikeMapper likeMapper;
+    private final UserMapper userMapper;
     public NewspaperFacade(ArticleService articleService, CommentService commentService,
                            LikeService likeService, UserService userService,
-                           SecurityConfig securityConfig){
+                           SecurityConfig securityConfig, ArticleMapperImpl articleMapper, CommentMapperImpl commentMapper, LikeMapperImpl likeMapper, UserMapperImpl userMapper){
         this.articleService = articleService;
         this.commentService = commentService;
         this.likeService = likeService;
         this.userService = userService;
         this.securityConfig = securityConfig;
+        this.articleMapper = articleMapper;
 
+        this.commentMapper = commentMapper;
+        this.likeMapper = likeMapper;
+        this.userMapper = userMapper;
     }
 
-    /**
+    /*
     Главная страница
      */
-    public List homepage(){
-        List homepage = new ArrayList<>();
-        if(securityConfig.isAuthenticated()){
-            homepage.add(userService.getNameAuthorizedUser());
-        }
+    public List<ArticleDTO> homepage(){
+        List<ArticleDTO> homepage = new ArrayList<>();
+        LikeDTO like = null;
         List<ArticleEntity> articles = articleService.getAllArticlesFor24Hours();
-        for (ArticleEntity article :articles){
-            homepage.add(article);
-            homepage.add(likeService.getAmountLikesFromArticle(article.getId()));
-            if (securityConfig.isAuthenticated()){
-                homepage.add(likeService.isUserLikeThisArticle(article.getId()));
-            }else {
-                homepage.add(false);
-            }
-            homepage.add(commentService.findCommentsOfArticle(0,article.getId()));
+        for (ArticleEntity article:articles){
+
+            List<CommentDTO> comments = getCommentsOnArticle(0, article.getId());
+
+           if (securityConfig.isAuthenticated() && likeService.isUserLikeThisArticle(article, userService.getByEmail(securityConfig.getCurrentUsername()))){
+               like = likeMapper.toLikeDTO(likeService.getLike(article,userService.getByEmail(securityConfig.getCurrentUsername())));
+           }
+            homepage.add(articleMapper.toArticleDto(article, comments, likeService.getAmountLikesFromArticle(article.getId()), like));
         }
         return homepage;
     }
 
-    /**
+    /*
     получение комментариев
-     @param page - номер страницы
-     @param articleId - id статьи
      */
-    public List getCommentsOnArticle(int page, Long articleId){
-        return commentService.findCommentsOfArticle(page, articleId);
+    public List<CommentDTO> getCommentsOnArticle(int page, Long articleId){
+        List<CommentDTO> comments = new ArrayList<>();
+        List<CommentEntity> commentEntities = commentService.findCommentsOfArticle(page, articleId);
+        for (CommentEntity comment:commentEntities){
+            comments.add(commentMapper.toCommentDTO(comment));
+        }
+        return comments;
     }
-    /**
+    //TODO проверить добавление комментария и простановку лайка
+    /*
     добавление комментария
-     @param description - описание
-     @param articleId - id статьи
      */
     public void addComment(String description, Long articleId){
-        commentService.save(new CommentEntity(description, userService.findById(userService.getIdAuthorizedUser()),articleService.findById(articleId)));
+        commentService.save(commentService.newComment(description, userService.getByEmail(securityConfig.getCurrentUsername()), articleService.findById(articleId)));
     }
-    /**
+    /*
     снятие/простановка лайка
-    @param articleId - id статьи
      */
     public void likeArticle(Long articleId){
-        likeService.likeArticle(articleId);
+       ArticleEntity article = articleService.findById(articleId);
+        UserEntity user = userService.getByEmail(securityConfig.getCurrentUsername());
+        if(likeService.isUserLikeThisArticle(article, user)){
+           likeService.dislike(article, user);
+       }else {
+            likeService.like(article,user);
+        }
     }
 }

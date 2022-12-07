@@ -34,6 +34,11 @@ public interface LikeRepository extends JpaRepository<LikeEntity, Long> {
     Long getLikeId(@Param("user") Long userId,
                    @Param("article") Long articleId);
 
+    @Query(nativeQuery = true, value = "select * from likes where user_id = :user and  article_id = :article ;")
+    LikeEntity getLike(@Param("article") Long articleId,
+                       @Param("user") Long userId);
+
+
 
 
 }

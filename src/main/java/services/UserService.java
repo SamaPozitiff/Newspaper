@@ -47,4 +47,8 @@ public class UserService {
     public UserEntity getByEmail(String email){
         return repository.findByEmail(email);
     }
+
+    public UserEntity newUser(String email, String password, String firstName, String lastName, String role){
+        return new UserEntity(email, password, firstName, lastName, role);
+    }
 }

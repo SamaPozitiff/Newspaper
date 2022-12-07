@@ -18,7 +18,7 @@ import java.util.Set;
 
 
 @SpringBootApplication(scanBasePackages={
-        "com.example.homepagenewspaper", "repositories", "entities", "controllers", "services", "security"})
+        "com.example.homepagenewspaper", "repositories", "entities", "controllers", "services", "security","mappers"})
 public class HomePageNewsPaperApplication {
 
     public static void main(String[] args) {

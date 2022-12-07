@@ -2,6 +2,7 @@ package services;
 
 import entities.ArticleEntity;
 import entities.CommentEntity;
+import entities.UserEntity;
 import repositories.ArticleRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +12,13 @@ import java.util.List;
 public class ArticleService {
     private final ArticleRepository repository;
     private final CommentService commentService;
+    private final UserService userService;
 
 
-    public ArticleService(ArticleRepository repository, CommentService commentService){
+    public ArticleService(ArticleRepository repository, CommentService commentService, UserService userService){
         this.repository = repository;
         this.commentService = commentService;
+        this.userService = userService;
     }
     /*
     получение статей за последние 24 часа
@@ -45,6 +48,11 @@ public class ArticleService {
         }
         repository.deleteById(id);
     }
+
+    public ArticleEntity newArticle(String title, String image, String description, UserEntity user) {
+        return new ArticleEntity(title, image, description, user);
+    }
+
 
 
 }

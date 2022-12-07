@@ -1,6 +1,10 @@
 package services;
 
+import entities.ArticleEntity;
 import entities.LikeEntity;
+import entities.UserEntity;
+import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
 import repositories.LikeRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,22 +13,26 @@ public class LikeService {
     LikeRepository repository;
     UserService userService;
     ArticleService articleService;
+
     public LikeService(LikeRepository repository, UserService userService,
                        ArticleService articleService) {
         this.repository = repository;
         this.userService = userService;
         this.articleService = articleService;
     }
-    /*
-    лайкнуть статью(если лайк был - убрать, если не было - добавить)
-     */
-    public void likeArticle(Long articleId) {
-       if(isUserLikeThisArticle(articleId)){
-           delete(getLikeId(userService.getIdAuthorizedUser(), articleId));
-       }else {
-           save(new LikeEntity(articleService.findById(articleId), userService.findById(userService.getIdAuthorizedUser())));
-       }
+
+    public void like(ArticleEntity article, UserEntity user){
+        save(newLike(article,user));
     }
+
+    public void dislike(ArticleEntity article, UserEntity user){
+        delete(article, user);
+    }
+
+    public LikeEntity newLike(ArticleEntity article, UserEntity user){
+        return new LikeEntity(article, user);
+    }
+
     /*
     получение количества лайков на статье
      */
@@ -34,31 +42,24 @@ public class LikeService {
     /*
     проверка лайкнул ли текущий авторизованный пользователь статью
      */
-    public boolean isUserLikeThisArticle(long articleId){
-        return repository.isUserLikeThisArticle(userService.getIdAuthorizedUser(), articleId) > 0 ? true : false;
+    public boolean isUserLikeThisArticle(ArticleEntity article, UserEntity user){
+        return repository.isUserLikeThisArticle(user.getId(), article.getId()) > 0;
     }
+
     /*
-    найти лайк по id
+    сохранить лайк
      */
-    public LikeEntity getLike(Long id){
-        return repository.findById(id).get();
-    }
-    /*
-    сохранить комментарий
-     */
-    public LikeEntity save (LikeEntity like){
+    @NotNull
+    private LikeEntity save (@NonNull LikeEntity like){
         return repository.save(like);
     }
-    /*
-    удаление комментария
-     */
-    public void delete(Long id){
-        repository.deleteById(id);
+
+    private void delete(@NonNull ArticleEntity article, @NonNull UserEntity user){
+        repository.delete(getLike(article, user));
     }
-    /*
-    получение id лайка
-     */
-    public Long getLikeId(Long  userId, Long articleId){
-        return repository.getLikeId(userId, articleId);
+
+    public LikeEntity getLike(ArticleEntity article, UserEntity user){
+        return repository.getLike(article.getId(), user.getId());
     }
+
 }
