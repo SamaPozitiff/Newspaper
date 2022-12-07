@@ -18,8 +18,9 @@ import java.util.List;
  */
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Long> {
-    /*
+    /**
     получение всех комментариев к конкретной статье
+     @param article - id статьи
      */
     @Query (nativeQuery = true, value = "select * from comments where article_id = :article ORDER BY date DESC;")
     List<CommentEntity> getCommentsOfArticle(@Param("article") Long article);

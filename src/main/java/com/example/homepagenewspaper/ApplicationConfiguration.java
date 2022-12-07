@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 @EntityScan({"entities"})
 public class ApplicationConfiguration {
 
-/*
+/**
     Настройки подключения базы данных
  */
     @Bean
