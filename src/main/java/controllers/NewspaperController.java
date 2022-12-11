@@ -3,6 +3,7 @@ package controllers;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 /*
 Контроллер страниц газеты
@@ -18,7 +19,7 @@ public class NewspaperController {
     Главная страница
      */
     @GetMapping(path = "/" ,produces = MediaType.APPLICATION_JSON_VALUE)
-    public List homepage(){
+    public List homepage() throws IOException {
         return newspaperFacade.homepage();
     }
     /**

@@ -3,11 +3,13 @@ package services;
 import entities.ArticleEntity;
 import entities.CommentEntity;
 import entities.UserEntity;
+import lombok.NonNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import repositories.CommentRepository;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +46,21 @@ public class CommentService {
         return repository.getCommentsOfArticle(articleId);
     }
 
-    public CommentEntity newComment(String description, UserEntity user, ArticleEntity article){
-        return new CommentEntity(description, user, article);
+    public CommentEntity newComment(@NonNull String description, @NonNull UserEntity user, @NonNull ArticleEntity article){
+        CommentEntity comment = new CommentEntity();
+        comment.setArticle(article);
+        comment.setUser(user);
+        comment.setDescription(description);
+        comment.setPublicationDate(new Date());
+        return comment;
+    }
+
+    public CommentEntity newCommentWithDate(@NonNull String description, @NonNull UserEntity user, @NonNull ArticleEntity article,@NonNull Date publicationDate){
+        CommentEntity comment = newComment(description, user, article);
+        comment.setArticle(article);
+        comment.setUser(user);
+        comment.setDescription(description);
+        comment.setPublicationDate(publicationDate);
+        return comment;
     }
 }

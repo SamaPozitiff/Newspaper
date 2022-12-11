@@ -10,6 +10,8 @@ import repositories.ArticleRepository;
 import repositories.CommentRepository;
 import repositories.LikeRepository;
 import repositories.UserRepository;
+import services.ArticleService;
+import services.CommentService;
 
 import javax.swing.*;
 import java.util.Collections;
@@ -27,24 +29,20 @@ public class HomePageNewsPaperApplication {
     }
     /**
      Заполняет базу данных при запуске приложения
-     @param encoder - шифровщик паролей
-     @param articleRepository - репозиторий статей
-     @param userRepository - репозиторий пользователей
-     @param commentRepository - репозиторий комментариев
-     @param likeRepository - репозиторий лайков
+
      */
     @Bean
-    public CommandLineRunner runner(PasswordEncoder encoder, ArticleRepository articleRepository, UserRepository userRepository, CommentRepository commentRepository, LikeRepository likeRepository){
+    public CommandLineRunner runner(PasswordEncoder encoder, ArticleService articleService, UserRepository userRepository, CommentService commentService, LikeRepository likeRepository){
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
                 for(int i = 0; i < 10; i++){
-                    UserEntity user = new UserEntity( "user" + i + "@mailru", encoder.encode("password"),
+                    UserEntity user = new UserEntity( "user" + i + "@mail.ru", encoder.encode("password"),
                             "user" + i, "lastname" + i, "ROLE_USER");
                     userRepository.save(user);
-                    ArticleEntity article = new ArticleEntity("" + i + "котяток", "src/resources/image" + i + "png", "" + i + "часов назад было обнаружено, что котики сладко мурчат", user);
-                    articleRepository.save(article);
-                    commentRepository.save(new CommentEntity("1" + i + " из 10", user, article));
+                    ArticleEntity article = articleService.newArticle("" + i + "котяток", "src/resources/image1.png", "" + i + "часов назад было обнаружено, что котики сладко мурчат", user);
+                    articleService.save(article);
+                    commentService.save(commentService.newComment("1" + i + " котяток из 10", user, article));
                     likeRepository.save(new LikeEntity(article, user));
                 }
             }

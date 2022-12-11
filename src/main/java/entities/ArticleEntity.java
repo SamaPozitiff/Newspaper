@@ -34,25 +34,4 @@ public class ArticleEntity {
     @Column (name = "date")
     private Date publicationDate;
 
-    public ArticleEntity(){
-
-    }
-
-
-    public ArticleEntity(String title, String image, String description, UserEntity author) {
-        this.title = title;
-        this.image = image;
-        this.description = description;
-        this.author = author;
-        this.publicationDate = new Date();
-    }
-
-    public ArticleEntity(String title, String image, String description, UserEntity author, Date date){
-        this.title = title;
-        this.image = image;
-        this.description = description;
-        this.author = author;
-        this.publicationDate = date;
-    }
-
 }

@@ -3,9 +3,11 @@ package services;
 import entities.ArticleEntity;
 import entities.CommentEntity;
 import entities.UserEntity;
+import lombok.NonNull;
 import repositories.ArticleRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -42,15 +44,23 @@ public class ArticleService {
     удаление статьи и всех комментариев к ней
      */
     public void delete (Long id){
-        List<CommentEntity> comments= commentService.findAllCommentsOfArticle(id);
-        for (CommentEntity comment:comments){
-            commentService.delete(comment.getId());
-        }
         repository.deleteById(id);
     }
 
-    public ArticleEntity newArticle(String title, String image, String description, UserEntity user) {
-        return new ArticleEntity(title, image, description, user);
+    public ArticleEntity newArticle(@NonNull String title, String image,@NonNull String description,@NonNull UserEntity user) {
+        ArticleEntity article = new ArticleEntity();
+        article.setTitle(title);
+        article.setImage(image);
+        article.setDescription(description);
+        article.setAuthor(user);
+        article.setPublicationDate(new Date());
+        return article;
+    }
+
+    public ArticleEntity newArticleWithDate(@NonNull String title, String image, @NonNull String description, @NonNull UserEntity user, @NonNull Date date){
+        ArticleEntity article = newArticle(title, image, description, user);
+        article.setPublicationDate(date);
+        return  article;
     }
 
 

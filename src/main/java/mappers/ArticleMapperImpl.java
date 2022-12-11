@@ -6,6 +6,12 @@ import restDTO.ArticleDTO;
 import restDTO.CommentDTO;
 import restDTO.LikeDTO;
 
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 @Component
 public class ArticleMapperImpl implements ArticleMapper{
@@ -16,14 +22,14 @@ public class ArticleMapperImpl implements ArticleMapper{
     }
 
     @Override
-    public ArticleDTO toArticleDto(ArticleEntity article, List<CommentDTO> comments, Long numberOfLikes, LikeDTO isUserLikeIt) {
+    public ArticleDTO toArticleDto(ArticleEntity article, List<CommentDTO> comments, Long numberOfLikes, LikeDTO isUserLikeIt) throws IOException {
         if(article == null){
             return null;
         }
         ArticleDTO articleDTO = new ArticleDTO();
         articleDTO.setId(article.getId());
         articleDTO.setDescription(article.getDescription());
-        articleDTO.setImage(article.getImage());
+        articleDTO.setImage(imageToByteArray(article.getImage()));
         articleDTO.setTitle(article.getTitle());
         articleDTO.setAuthor(userMapper.toUserDTO(article.getAuthor()));
         articleDTO.setDescription(article.getDescription());
@@ -33,6 +39,14 @@ public class ArticleMapperImpl implements ArticleMapper{
         return articleDTO;
     }
 
+
+    private byte[] imageToByteArray (String path) throws IOException {
+
+        File file = new File("src/main/resources/image1.png");
+        byte[] bytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+        return bytes;
+
+    }
 
 
 }

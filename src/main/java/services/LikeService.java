@@ -49,8 +49,8 @@ public class LikeService {
     /*
     сохранить лайк
      */
-    @NotNull
-    private LikeEntity save (@NonNull LikeEntity like){
+
+    public LikeEntity save (@NonNull LikeEntity like){
         return repository.save(like);
     }
 

@@ -36,19 +36,4 @@ public class CommentEntity {
     public CommentEntity(){
 
     }
-
-
-    public CommentEntity(String description, UserEntity user, ArticleEntity article) {
-        this.description = description;
-        this.user = user;
-        this.publicationDate = new Date();
-        this.article = article;
-    }
-
-    public CommentEntity(String description, UserEntity user, Date publicationDate, ArticleEntity article) {
-        this.description = description;
-        this.user = user;
-        this.publicationDate = publicationDate;
-        this.article = article;
-    }
 }

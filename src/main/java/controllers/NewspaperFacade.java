@@ -14,6 +14,7 @@ import services.CommentService;
 import services.LikeService;
 import services.UserService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 @Component
@@ -45,7 +46,7 @@ public class NewspaperFacade {
     /*
     Главная страница
      */
-    public List<ArticleDTO> homepage(){
+    public List<ArticleDTO> homepage() throws IOException {
         List<ArticleDTO> homepage = new ArrayList<>();
         LikeDTO like = null;
         List<ArticleEntity> articles = articleService.getAllArticlesFor24Hours();
@@ -90,5 +91,15 @@ public class NewspaperFacade {
        }else {
             likeService.like(article,user);
         }
+    }
+
+    public void deleteArticle(Long articleId){
+        if(!commentService.findAllCommentsOfArticle(articleId).isEmpty()){
+            List<CommentEntity> comments= commentService.findAllCommentsOfArticle(articleId);
+            for (CommentEntity comment:comments){
+                commentService.delete(comment.getId());
+            }
+        }
+        articleService.delete(articleId);
     }
 }

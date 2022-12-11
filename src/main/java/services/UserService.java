@@ -30,13 +30,6 @@ public class UserService {
         return repository.findById(id).get();
     }
     /*
-    получить имя и фамилию авторизованного пользователя
-     */
-    public String getNameAuthorizedUser(){
-        UserEntity authUser = repository.findByEmail(securityConfig.getCurrentUsername());
-        return String.format("%s %s", authUser.getFirstName(), authUser.getLastName());
-    }
-    /*
     получить id авторизованного пользователя
      */
     public Long getIdAuthorizedUser(){
@@ -50,5 +43,9 @@ public class UserService {
 
     public UserEntity newUser(String email, String password, String firstName, String lastName, String role){
         return new UserEntity(email, password, firstName, lastName, role);
+    }
+
+    public void delete(UserEntity user){
+        repository.delete(user);
     }
 }
