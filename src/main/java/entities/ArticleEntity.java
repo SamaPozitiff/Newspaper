@@ -17,6 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "articles")
 public class ArticleEntity {
+
     @Id
     @GeneratedValue
     @Column(name = "id")

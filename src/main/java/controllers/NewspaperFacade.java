@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Component
 public class NewspaperFacade {
+
     private final ArticleService articleService;
     private final CommentService commentService;
     private final LikeService likeService;
@@ -28,6 +29,7 @@ public class NewspaperFacade {
     private final CommentMapper commentMapper;
     private final LikeMapper likeMapper;
     private final UserMapper userMapper;
+
     public NewspaperFacade(ArticleService articleService, CommentService commentService,
                            LikeService likeService, UserService userService,
                            SecurityConfig securityConfig, ArticleMapperImpl articleMapper, CommentMapperImpl commentMapper, LikeMapperImpl likeMapper, UserMapperImpl userMapper){
@@ -37,7 +39,6 @@ public class NewspaperFacade {
         this.userService = userService;
         this.securityConfig = securityConfig;
         this.articleMapper = articleMapper;
-
         this.commentMapper = commentMapper;
         this.likeMapper = likeMapper;
         this.userMapper = userMapper;
@@ -69,13 +70,13 @@ public class NewspaperFacade {
         return comments;
     }
     //TODO проверить добавление комментария и простановку лайка
-    /*
+    /**
     добавление комментария
      */
     public void addComment(String description, Long articleId){
         commentService.save(commentService.newComment(description, userService.getByEmail(securityConfig.getCurrentUsername()), articleService.findById(articleId)));
     }
-    /*
+    /**
     снятие/простановка лайка
      */
     public void likeArticle(Long articleId){

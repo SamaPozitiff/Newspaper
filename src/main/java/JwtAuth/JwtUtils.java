@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class JwtUtils {
+
     @Autowired
     UserEntity user;
     public static JwtAuthentication generate(Claims claims) {

@@ -8,6 +8,7 @@ import repositories.UserRepository;
 @RestController
 @RequestMapping("/register")
 public class RegistrationController {
+
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
 

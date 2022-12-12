@@ -21,11 +21,4 @@ public class LikeEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    public LikeEntity() {
-    }
-
-    public LikeEntity(ArticleEntity article, UserEntity user) {
-        this.article = article;
-        this.user = user;
-    }
 }

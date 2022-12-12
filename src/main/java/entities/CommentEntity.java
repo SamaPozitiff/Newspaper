@@ -29,11 +29,8 @@ public class CommentEntity {
     @Column(name = "date")
     private Date publicationDate;
     @ManyToOne
-
     @JoinColumn(name = "article_id")
     private ArticleEntity article;
 
-    public CommentEntity(){
 
-    }
 }

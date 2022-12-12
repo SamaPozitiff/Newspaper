@@ -2,11 +2,8 @@ package mappers;
 
 import entities.CommentEntity;
 import org.springframework.stereotype.Component;
-import restDTO.ArticleDTO;
 import restDTO.CommentDTO;
 
-import java.util.ArrayList;
-import java.util.List;
 @Component
 public class CommentMapperImpl implements CommentMapper{
     private final UserMapper userMapper;

@@ -10,11 +10,13 @@ import java.util.List;
  */
 @RestController
 public class NewspaperController {
-    NewspaperFacade newspaperFacade;
+
+    private NewspaperFacade newspaperFacade;
 
     public NewspaperController(NewspaperFacade newspaperFacade){
         this.newspaperFacade = newspaperFacade;
     }
+
     /**
     Главная страница
      */
@@ -22,11 +24,11 @@ public class NewspaperController {
     public List homepage() throws IOException {
         return newspaperFacade.homepage();
     }
+
     /**
     Комментарии постранично
      @param articleId - id статьи
      @param page - номер страницы
-
      */
     @GetMapping(path = "/comments/",produces = MediaType.APPLICATION_JSON_VALUE)
     public List getComments(@RequestParam Long articleId, Integer page){
@@ -49,8 +51,5 @@ public class NewspaperController {
     public void likeArticle(@RequestParam Long articleId){
         newspaperFacade.likeArticle(articleId);
     }
-
-
-
 
 }

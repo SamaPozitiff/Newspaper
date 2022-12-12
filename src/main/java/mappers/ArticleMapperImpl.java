@@ -4,13 +4,11 @@ import entities.ArticleEntity;
 import org.springframework.stereotype.Component;
 import restDTO.ArticleDTO;
 import restDTO.CommentDTO;
-import restDTO.LikeDTO;
 
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 @Component
@@ -22,7 +20,8 @@ public class ArticleMapperImpl implements ArticleMapper{
     }
 
     @Override
-    public ArticleDTO toArticleDto(ArticleEntity article, List<CommentDTO> comments, Long numberOfLikes, boolean isUserLikeIt) throws IOException {
+    public ArticleDTO toArticleDto(ArticleEntity article, List<CommentDTO> comments,
+                                   Long numberOfLikes, boolean isUserLikeIt) throws IOException {
         if(article == null){
             return null;
         }
@@ -44,8 +43,7 @@ public class ArticleMapperImpl implements ArticleMapper{
     private byte[] imageToByteArray (String path) throws IOException {
 
         File file = new File(path);
-        byte[] bytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
-        return bytes;
+        return Files.readAllBytes(Paths.get(file.getAbsolutePath()));
 
     }
 
