@@ -12,7 +12,7 @@ public class UserMapperImpl implements UserMapper{
             return null;
         }
         UserDTO userDTO = new UserDTO();
-        userDTO.setId(userDTO.getId());
+        userDTO.setId(user.getId());
         userDTO.setFullName(String.format("%s %s", user.getFirstName(), user.getLastName()));
         return userDTO;
     }

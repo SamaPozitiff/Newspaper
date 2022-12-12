@@ -30,7 +30,7 @@ public class ArticleServiceTest {
        UserEntity user = userService.newUser("user@mail.ru", "test", "first name", "last_name", "ROLE_USER");
        userService.save(user);
        ArticleService articleService = (ArticleService) ctx.getBean("articleService");
-       ArticleEntity article1 = articleService.newArticle("title 1", "image", "Description 1", user);
+       ArticleEntity article1 = articleService.newArticle("title 1", "src/main/resources/image1.png", "Description 1", user);
         Calendar date = new GregorianCalendar();
         date.add(Calendar.DAY_OF_YEAR, -2);
         ArticleEntity article2 = articleService.newArticleWithDate("title 2", "image", "Description 2", user, date.getTime());

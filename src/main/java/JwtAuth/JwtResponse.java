@@ -1,4 +1,4 @@
-package security;
+package JwtAuth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

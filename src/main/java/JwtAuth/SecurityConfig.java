@@ -1,4 +1,4 @@
-package security;
+package JwtAuth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.core.Authentication;
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -25,8 +23,6 @@ import javax.sql.DataSource;
 public class SecurityConfig {
     @Autowired
     private final JwtFilter jwtFilter;
-    @Autowired
-    private DataSource dataSource;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -46,15 +42,6 @@ public class SecurityConfig {
         return authentication.isAuthenticated();
     }
 
-//    @Bean
-//    public JdbcUserDetailsManager jdbcUserDetailsManager() {
-//        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
-//        jdbcUserDetailsManager.setDataSource(dataSource);
-//        jdbcUserDetailsManager.setUsersByUsernameQuery("select email, password, true from newspaper_user where email = ?");
-//        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select email, true from newspaper_user where email = ?");
-//
-//        return jdbcUserDetailsManager;
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -69,6 +56,7 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                                 .and()
                                 .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                ).build();
+                )
+                .build();
     }
 }

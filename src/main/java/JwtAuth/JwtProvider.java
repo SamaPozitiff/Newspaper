@@ -1,4 +1,4 @@
-package security;
+package JwtAuth;
 
 import entities.UserEntity;
 import io.jsonwebtoken.*;

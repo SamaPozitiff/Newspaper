@@ -22,7 +22,7 @@ public class ArticleMapperImpl implements ArticleMapper{
     }
 
     @Override
-    public ArticleDTO toArticleDto(ArticleEntity article, List<CommentDTO> comments, Long numberOfLikes, LikeDTO isUserLikeIt) throws IOException {
+    public ArticleDTO toArticleDto(ArticleEntity article, List<CommentDTO> comments, Long numberOfLikes, boolean isUserLikeIt) throws IOException {
         if(article == null){
             return null;
         }
@@ -36,13 +36,14 @@ public class ArticleMapperImpl implements ArticleMapper{
         articleDTO.setComments(comments);
         articleDTO.setLikes(numberOfLikes);
         articleDTO.setCurrentUserLikeIt(isUserLikeIt);
+        articleDTO.setDate(article.getPublicationDate());
         return articleDTO;
     }
 
 
     private byte[] imageToByteArray (String path) throws IOException {
 
-        File file = new File("src/main/resources/image1.png");
+        File file = new File(path);
         byte[] bytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
         return bytes;
 

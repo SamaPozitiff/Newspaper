@@ -6,7 +6,7 @@ import mappers.*;
 import restDTO.ArticleDTO;
 import restDTO.CommentDTO;
 import restDTO.LikeDTO;
-import security.SecurityConfig;
+import JwtAuth.SecurityConfig;
 import entities.ArticleEntity;
 import org.springframework.stereotype.Component;
 import services.ArticleService;
@@ -43,7 +43,7 @@ public class NewspaperFacade {
         this.userMapper = userMapper;
     }
 
-    /*
+    /**
     Главная страница
      */
     public List<ArticleDTO> homepage() throws IOException {
@@ -51,23 +51,18 @@ public class NewspaperFacade {
         LikeDTO like = null;
         List<ArticleEntity> articles = articleService.getAllArticlesFor24Hours();
         for (ArticleEntity article:articles){
-
             List<CommentDTO> comments = getCommentsOnArticle(0, article.getId());
-
-           if (securityConfig.isAuthenticated() && likeService.isUserLikeThisArticle(article, userService.getByEmail(securityConfig.getCurrentUsername()))){
-               like = likeMapper.toLikeDTO(likeService.getLike(article,userService.getByEmail(securityConfig.getCurrentUsername())));
-           }
-            homepage.add(articleMapper.toArticleDto(article, comments, likeService.getAmountLikesFromArticle(article.getId()), like));
+            homepage.add(articleMapper.toArticleDto(article, comments, likeService.getAmountLikesFromArticle(article.getId()), securityConfig.isAuthenticated() && likeService.isUserLikeThisArticle(article, userService.getByEmail(securityConfig.getCurrentUsername()))));
         }
         return homepage;
     }
 
-    /*
+    /**
     получение комментариев
      */
     public List<CommentDTO> getCommentsOnArticle(int page, Long articleId){
         List<CommentDTO> comments = new ArrayList<>();
-        List<CommentEntity> commentEntities = commentService.findCommentsOfArticle(page, articleId);
+        List<CommentEntity> commentEntities = commentService.findPagedCommentsOfArticle(page, articleId);
         for (CommentEntity comment:commentEntities){
             comments.add(commentMapper.toCommentDTO(comment));
         }

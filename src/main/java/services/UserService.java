@@ -1,6 +1,6 @@
 package services;
 
-import security.SecurityConfig;
+import JwtAuth.SecurityConfig;
 import entities.UserEntity;
 import repositories.UserRepository;
 import org.springframework.stereotype.Service;

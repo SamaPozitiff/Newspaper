@@ -1,16 +1,11 @@
-package security;
+package JwtAuth;
 
-import entities.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.security.auth.Subject;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Getter

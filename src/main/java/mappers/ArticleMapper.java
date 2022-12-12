@@ -11,5 +11,5 @@ import java.util.List;
 
 @Mapper
 public interface ArticleMapper {
-    ArticleDTO toArticleDto(ArticleEntity article, List<CommentDTO> comments, Long numberOfLikes, LikeDTO isUserLikeIt) throws IOException;
+    ArticleDTO toArticleDto(ArticleEntity article, List<CommentDTO> comments, Long numberOfLikes, boolean isUserLikeIt) throws IOException;
 }

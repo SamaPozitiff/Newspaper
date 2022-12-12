@@ -50,8 +50,8 @@ public class LikeService {
     сохранить лайк
      */
 
-    public LikeEntity save (@NonNull LikeEntity like){
-        return repository.save(like);
+    private void save (@NonNull LikeEntity like){
+        repository.save(like);
     }
 
     private void delete(@NonNull ArticleEntity article, @NonNull UserEntity user){
@@ -59,7 +59,11 @@ public class LikeService {
     }
 
     public LikeEntity getLike(ArticleEntity article, UserEntity user){
-        return repository.getLike(article.getId(), user.getId());
+        try {
+            return repository.getLike(article.getId(), user.getId());
+        }catch (Exception ex){
+            return null;
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package security;
+package services;
 
 import entities.UserEntity;
 import io.jsonwebtoken.Claims;
@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import services.UserService;
+import JwtAuth.JwtAuthentication;
+import JwtAuth.JwtProvider;
+import JwtAuth.JwtRequest;
+import JwtAuth.JwtResponse;
 
 import javax.security.auth.message.AuthException;
 import java.util.HashMap;

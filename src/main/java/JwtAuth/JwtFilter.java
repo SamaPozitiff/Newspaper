@@ -1,4 +1,4 @@
-package security;
+package JwtAuth;
 
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;

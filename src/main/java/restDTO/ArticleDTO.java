@@ -3,6 +3,7 @@ package restDTO;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Data
 public class ArticleDTO {
@@ -13,5 +14,7 @@ public class ArticleDTO {
     private UserDTO author;
     private List<CommentDTO> comments = new ArrayList<>();
     private Long likes;
-    private LikeDTO CurrentUserLikeIt;
+    private boolean CurrentUserLikeIt;
+
+    private Date date;
 }

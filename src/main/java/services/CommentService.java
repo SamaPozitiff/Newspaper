@@ -4,7 +4,6 @@ import entities.ArticleEntity;
 import entities.CommentEntity;
 import entities.UserEntity;
 import lombok.NonNull;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import repositories.CommentRepository;
 
@@ -16,12 +15,12 @@ import java.util.stream.Collectors;
 @Service
 public class CommentService {
     private final int COMMENTS_ON_PAGE = 3;
-    CommentRepository repository;
+    private CommentRepository repository;
 
     public CommentService(CommentRepository repository){
         this.repository = repository;
     }
-    /*
+    /**
     сохранение комментария
      */
     public void save(CommentEntity comment){
@@ -30,8 +29,16 @@ public class CommentService {
     /*
     найти все комментарии к конкретной статье постранично
      */
-    public List<CommentEntity> findCommentsOfArticle(Integer page, Long articleId){
+    public List<CommentEntity> findPagedCommentsOfArticle(Integer page, Long articleId){
         return  repository.getCommentsOfArticle(articleId).stream().skip((long) page * COMMENTS_ON_PAGE).limit(COMMENTS_ON_PAGE).collect(Collectors.toList());
+    }
+
+    public CommentEntity findById(Long id){
+        try {
+            return repository.findById(id).get();
+        }catch (Exception e){
+            return null;
+        }
     }
     /*
     удаление комментария

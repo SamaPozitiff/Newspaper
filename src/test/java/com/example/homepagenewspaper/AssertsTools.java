@@ -35,6 +35,7 @@ public class AssertsTools {
     }
 
     public boolean compareComment(CommentEntity expect, CommentEntity result){
+        if(expect == null || result == null) return false;
         if (!Objects.equals(expect.getId(), result.getId())) return false;
         if (!Objects.equals(expect.getDescription(), result.getDescription())) return false;
         if (!compareArticle(expect.getArticle(), result.getArticle())) return false;
@@ -77,7 +78,6 @@ public class AssertsTools {
     public boolean compareArticleDTO(ArticleDTO expect, ArticleDTO result){
         if (!Objects.equals(expect.getId(), result.getId())) return false;
         if (!compareUserDTO(expect.getAuthor(), result.getAuthor())) return false;
-        if (!Objects.equals(expect.getImage(), result.getImage())) return false;
         if (!Objects.equals(expect.getTitle(), result.getTitle())) return false;
         if (!Objects.equals(expect.getLikes(), result.getLikes())) return false;
         if (!compareListCommentDTO(expect.getComments(), result.getComments())) return false;
@@ -88,6 +88,14 @@ public class AssertsTools {
         if(expect.size()!= result.size()) return false;
         for (int i = 0; i < expect.size(); i++){
             if (!compareArticleDTO(expect.get(i), result.get(i))) return false;
+        }
+        return true;
+    }
+
+    public boolean compareListOfComments(List<CommentEntity> expect, List<CommentEntity> result){
+        if(expect.size()!= result.size()) return false;
+        for (int i = 0; i < expect.size(); i++){
+            if(!compareComment(expect.get(i), result.get(i))) return false;
         }
         return true;
     }

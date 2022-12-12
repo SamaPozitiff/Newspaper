@@ -10,6 +10,7 @@ import entities.UserEntity;
 import mappers.ArticleMapper;
 import mappers.CommentMapperImpl;
 import mappers.LikeMapperImpl;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import services.CommentService;
 import services.LikeService;
 import services.UserService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +44,7 @@ public class FacadeTest {
 
 
     @Test
-    public void homepage(ApplicationContext ctx){
+    public void homepage(ApplicationContext ctx) throws IOException {
         UserService userService = (UserService) ctx.getBean("userService");
         ArticleService articleService = (ArticleService) ctx.getBean("articleService");
         LikeService likeService = (LikeService) ctx.getBean("likeService");
@@ -52,13 +54,13 @@ public class FacadeTest {
         for (int i = 0; i < 5; i++){
             UserEntity user = userService.newUser("" + i + "@email", "password", "name", "lastname", "ROLE_USER");
             userService.save(user);
-            ArticleEntity article = articleService.newArticle("title" + i, "image", "description", user);
+            ArticleEntity article = articleService.newArticle("title" + i, "src/main/resources/image1.png", "description", user);
+            articleService.save(article);
             likeService.like(article, user);
             CommentEntity comment = commentService.newComment("description", user, article);
             commentService.save(comment);
-            LikeEntity like = new LikeEntity(article, user);
-            likeService.save(like);
-            ArticleDTO articleDTO = articleMapper.toArticleDto(article, newspaperFacade.getCommentsOnArticle(0, article.getId()), likeService.getAmountLikesFromArticle(article.getId()), likeMapper.toLikeDTO(like));
+            likeService.like(article,user);
+            ArticleDTO articleDTO = articleMapper.toArticleDto(article, newspaperFacade.getCommentsOnArticle(0, article.getId()), likeService.getAmountLikesFromArticle(article.getId()), false);
             expect.add(0, articleDTO);
         }
         Assertions.assertTrue(assertsTools.compareListArticleDTO(expect, newspaperFacade.homepage()));
@@ -73,9 +75,17 @@ public class FacadeTest {
         CommentEntity comment = addCommentEntity(ctx, user, article);
         List<CommentDTO> comments = Arrays.asList(commentMapper.toCommentDTO(comment));
         Assertions.assertTrue(assertsTools.compareListCommentDTO(comments, newspaperFacade.getCommentsOnArticle(0, article.getId())));
+    }
 
-
-
+    @Test
+    public void addComment(ApplicationContext ctx){
+        UserEntity user = addUser(ctx);
+        ArticleEntity article = addArticle(ctx, user);
+        CommentService commentService = (CommentService) ctx.getBean("commentService");
+        CommentEntity comment = commentService.newComment("description", user, article);
+        newspaperFacade.addComment(comment.getDescription(), article.getId());
+        List<CommentDTO> expect = Arrays.asList(commentMapper.toCommentDTO(comment));
+        Assertions.assertTrue(assertsTools.compareListCommentDTO(expect,         newspaperFacade.getCommentsOnArticle(0, article.getId())));
     }
 
     public UserEntity addUser(ApplicationContext ctx){
@@ -85,7 +95,7 @@ public class FacadeTest {
         return user;
     }
 
-    public ArticleEntity addArticle(ApplicationContext ctx, UserEntity user){
+    public ArticleEntity addArticle(@NotNull ApplicationContext ctx, UserEntity user){
         ArticleService articleService = (ArticleService) ctx.getBean("articleService");
         ArticleEntity article = articleService.newArticle("title", "image", "description", user);
         articleService.save(article);
