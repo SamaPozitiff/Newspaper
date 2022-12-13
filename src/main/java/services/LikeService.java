@@ -30,7 +30,10 @@ public class LikeService {
     }
 
     public LikeEntity newLike(ArticleEntity article, UserEntity user){
-        return new LikeEntity(article, user);
+        LikeEntity like = new LikeEntity();
+        like.setArticle(article);
+        like.setUser(user);
+        return like;
     }
 
     /*
