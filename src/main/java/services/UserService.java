@@ -42,7 +42,13 @@ public class UserService {
     }
 
     public UserEntity newUser(String email, String password, String firstName, String lastName, String role){
-        return new UserEntity(email, password, firstName, lastName, role);
+        UserEntity user = new UserEntity();
+        user.setEmail(email);
+        user.setEmail(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setRole(role);
+        return user;
     }
 
     public void delete(UserEntity user){

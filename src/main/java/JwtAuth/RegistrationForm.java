@@ -10,18 +10,21 @@ import services.UserService;
 @Data
 @AllArgsConstructor
 public class RegistrationForm {
-    @Autowired
-    UserService userService;
     private String email;
     private String password;
     private String firstName;
-    private String secondName;
+    private String lastName;
     private String role;
     /*
     создает и возвращает сущность пользователь с зашифрованным паролем
      */
     public UserEntity toUser(PasswordEncoder passwordEncoder){
-        return userService.newUser(email, passwordEncoder.encode(password),
-                firstName, secondName, role);
+        UserEntity user = new UserEntity();
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setRole(role);
+        return user;
     }
 }

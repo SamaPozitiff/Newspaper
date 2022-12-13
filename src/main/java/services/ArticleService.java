@@ -1,16 +1,12 @@
 package services;
 
 import entities.ArticleEntity;
-import entities.CommentEntity;
+
 import entities.UserEntity;
 import lombok.NonNull;
 import repositories.ArticleRepository;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
