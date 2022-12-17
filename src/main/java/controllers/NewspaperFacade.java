@@ -49,7 +49,6 @@ public class NewspaperFacade {
      */
     public List<ArticleDTO> homepage() throws IOException {
         List<ArticleDTO> homepage = new ArrayList<>();
-        LikeDTO like = null;
         List<ArticleEntity> articles = articleService.getAllArticlesFor24Hours();
         for (ArticleEntity article:articles){
             List<CommentDTO> comments = getCommentsOnArticle(0, article.getId());
