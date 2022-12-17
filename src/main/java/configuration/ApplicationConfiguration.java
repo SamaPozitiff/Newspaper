@@ -9,8 +9,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableJpaRepositories("repositories")
-@EntityScan({"entities"})
+@EnableJpaRepositories("repository")
+@EntityScan({"entity"})
 public class ApplicationConfiguration {
 
 /**
