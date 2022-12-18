@@ -30,7 +30,7 @@ public class NewspaperFacade {
 
     public NewspaperFacade(ArticleService articleService, CommentService commentService,
                            LikeService likeService, UserService userService,
-                           SecurityConfig securityConfig, ArticleMapperImpl articleMapper, CommentMapperImpl commentMapper){
+                           SecurityConfig securityConfig, ArticleMapper articleMapper, CommentMapper commentMapper){
         this.articleService = articleService;
         this.commentService = commentService;
         this.likeService = likeService;

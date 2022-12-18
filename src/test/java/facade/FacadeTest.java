@@ -1,17 +1,22 @@
 package facade;
 
+import jwt_auth.SecurityConfig;
+import mapper.*;
 import newspaper_main.AssertsTools;
 import newspaper_main.HomePageNewsPaperApplication;
 import entity.ArticleEntity;
 import entity.CommentEntity;
 import entity.UserEntity;
-import mapper.ArticleMapper;
-import mapper.CommentMapperImpl;
-import mapper.LikeMapperImpl;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import rest_dto.ArticleDTO;
@@ -25,85 +30,46 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 @SpringBootTest(classes = HomePageNewsPaperApplication.class)
 public class FacadeTest {
-    @Autowired
-    NewspaperFacade newspaperFacade;
-    @Autowired
-    CommentMapperImpl commentMapper;
-    @Autowired
-    AssertsTools assertsTools;
-    @Autowired
-    LikeService likeService;
-    @Autowired
-    LikeMapperImpl likeMapper;
 
 
-
-    @Test
-    public void homepage(ApplicationContext ctx) throws IOException {
-        UserService userService = (UserService) ctx.getBean("userService");
-        ArticleService articleService = (ArticleService) ctx.getBean("articleService");
-        LikeService likeService = (LikeService) ctx.getBean("likeService");
-        CommentService commentService = (CommentService) ctx.getBean("commentService");
-        ArticleMapper articleMapper = (ArticleMapper) ctx.getBean("articleMapperImpl");
-        List<ArticleDTO> expect = new ArrayList<>();
-        for (int i = 0; i < 5; i++){
-            UserEntity user = userService.newUser("" + i + "@email", "password", "name", "lastname", "ROLE_USER");
-            userService.save(user);
-            ArticleEntity article = articleService.newArticle("title" + i, "src/main/resources/image1.png", "description", user);
-            articleService.save(article);
-            likeService.like(article, user);
-            CommentEntity comment = commentService.newComment("description", user, article);
-            commentService.save(comment);
-            likeService.like(article,user);
-            ArticleDTO articleDTO = articleMapper.toArticleDto(article, newspaperFacade.getCommentsOnArticle(0, article.getId()), likeService.getAmountLikesFromArticle(article.getId()), false);
-            expect.add(0, articleDTO);
+    @ParameterizedTest
+    @CsvSource({
+            "1, 3",
+            "5, 1",
+            "4, 2"
+    })
+    void testHomage(int articles, int comments) throws IOException {
+        ArticleService articleService = Mockito.mock(ArticleService.class);
+        CommentService commentService = Mockito.mock(CommentService.class);
+        LikeService likeService = Mockito.mock(LikeService.class);
+        UserService userService = Mockito.mock(UserService.class);
+        SecurityConfig securityConfig = Mockito.mock(SecurityConfig.class);
+        ArticleMapper articleMapper = Mockito.mock(ArticleMapperImpl.class);
+        CommentMapper commentMapper = Mockito.mock(CommentMapperImpl.class);
+        NewspaperFacade newspaperFacade = new NewspaperFacade(articleService, commentService, likeService, userService, securityConfig, articleMapper, commentMapper);
+        List<ArticleEntity> articlesList = new ArrayList<>();
+        int i = 0;
+        while (i < articles){
+            articlesList.add(Mockito.mock(ArticleEntity.class));
+            i++;
         }
-        Assertions.assertTrue(assertsTools.compareListArticleDTO(expect, newspaperFacade.homepage()));
+        List<CommentEntity> commentsList = new ArrayList<>();
+        int j = 0;
+        while (j < comments){
+            commentsList.add(Mockito.mock(CommentEntity.class));
+            j++;
+        }
+        Mockito.when(articleService.getAllArticlesFor24Hours()).thenReturn(articlesList);
+        Mockito.when(commentService.findPagedCommentsOfArticle(Mockito.any(), Mockito.any())).thenReturn(commentsList);
+        newspaperFacade.homepage();
+        Mockito.verify(articleService, Mockito.times(1)).getAllArticlesFor24Hours();
+        Mockito.verify(commentService, Mockito.times(articles)).findPagedCommentsOfArticle(Mockito.any(), Mockito.any());
+        Mockito.verify(commentMapper, Mockito.times(articles*comments)).toCommentDTO(Mockito.any());
+        Mockito.verify(articleMapper, Mockito.times(articles)).toArticleDto(Mockito.any(), Mockito.anyList(), Mockito.anyLong(), Mockito.anyBoolean());
 
-    }
-
-
-    @Test
-    public void getComments(ApplicationContext ctx){
-        UserEntity user = addUser(ctx);
-        ArticleEntity article = addArticle(ctx, user);
-        CommentEntity comment = addCommentEntity(ctx, user, article);
-        List<CommentDTO> comments = Arrays.asList(commentMapper.toCommentDTO(comment));
-        Assertions.assertTrue(assertsTools.compareListCommentDTO(comments, newspaperFacade.getCommentsOnArticle(0, article.getId())));
-    }
-
-    @Test
-    public void addComment(ApplicationContext ctx){
-        UserEntity user = addUser(ctx);
-        ArticleEntity article = addArticle(ctx, user);
-        CommentService commentService = (CommentService) ctx.getBean("commentService");
-        CommentEntity comment = commentService.newComment("description", user, article);
-        newspaperFacade.addComment(comment.getDescription(), article.getId());
-        List<CommentDTO> expect = Arrays.asList(commentMapper.toCommentDTO(comment));
-        Assertions.assertTrue(assertsTools.compareListCommentDTO(expect,         newspaperFacade.getCommentsOnArticle(0, article.getId())));
-    }
-
-    public UserEntity addUser(ApplicationContext ctx){
-        UserService userService = (UserService) ctx.getBean("userService");
-        UserEntity user = userService.newUser( "test@email", "password", "name", "lastname", "ROLE_USER");
-        userService.save(user);
-        return user;
-    }
-
-    public ArticleEntity addArticle(@NotNull ApplicationContext ctx, UserEntity user){
-        ArticleService articleService = (ArticleService) ctx.getBean("articleService");
-        ArticleEntity article = articleService.newArticle("title", "image", "description", user);
-        articleService.save(article);
-        return article;
-    }
-
-    public CommentEntity addCommentEntity(ApplicationContext ctx, UserEntity user, ArticleEntity article){
-        CommentService commentService = (CommentService) ctx.getBean("commentService");
-        CommentEntity comment = commentService.newComment("comment", user, article);
-        commentService.save(comment);
-        return comment;
     }
 }
