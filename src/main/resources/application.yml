@@ -1,5 +1,0 @@
-spring:
-  security:
-    user:
-      email: inna
-      password: 123
