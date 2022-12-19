@@ -20,6 +20,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EqualsAndHashCode
 @Table(name= "newspaper_users")
 public class UserEntity implements UserDetails{
 

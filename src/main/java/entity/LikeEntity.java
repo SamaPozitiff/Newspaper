@@ -1,6 +1,7 @@
 package entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 /*
@@ -8,6 +9,7 @@ import javax.persistence.*;
  */
 @Data
 @Entity
+@EqualsAndHashCode
 @Table(name = "likes")
 public class LikeEntity {
 

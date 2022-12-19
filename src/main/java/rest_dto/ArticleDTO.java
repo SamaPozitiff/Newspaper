@@ -1,11 +1,13 @@
 package rest_dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @Data
+@EqualsAndHashCode
 public class ArticleDTO {
     private Long id;
     private String title;

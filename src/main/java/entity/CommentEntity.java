@@ -1,6 +1,7 @@
 package entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -11,6 +12,7 @@ import java.util.Date;
  */
 @Data
 @Entity
+@EqualsAndHashCode
 @Table(name = "comments")
 public class CommentEntity {
 

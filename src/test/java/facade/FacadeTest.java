@@ -2,25 +2,13 @@ package facade;
 
 import jwt_auth.SecurityConfig;
 import mapper.*;
-import newspaper_main.AssertsTools;
 import newspaper_main.HomePageNewsPaperApplication;
 import entity.ArticleEntity;
 import entity.CommentEntity;
-import entity.UserEntity;
-import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import rest_dto.ArticleDTO;
-import rest_dto.CommentDTO;
 import service.ArticleService;
 import service.CommentService;
 import service.LikeService;
@@ -28,9 +16,7 @@ import service.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 @SpringBootTest(classes = HomePageNewsPaperApplication.class)
 public class FacadeTest {

@@ -33,7 +33,7 @@ public class HomePageNewsPaperApplication {
                 UserEntity user = userService.newUser( "user" + i + "@mail.ru", encoder.encode("password"),
                         "user" + i, "lastname" + i, "ROLE_USER");
                 userService.save(user);
-                ArticleEntity article = articleService.newArticle("" + i + "котяток", "src/main/resources/image" + i + ".png", "" + i + "часов назад было обнаружено, что котики сладко мурчат", user);
+                ArticleEntity article = articleService.newArticle("" + i + "котяток", "classes/image1.png", "" + i + "часов назад было обнаружено, что котики сладко мурчат", user);
                 articleService.save(article);
                 commentService.save(commentService.newComment("1" + i + " котяток из 10", user, article));
                 likeService.like(article,user);

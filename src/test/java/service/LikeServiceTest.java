@@ -1,29 +1,22 @@
 package service;
 
-import newspaper_main.AssertsTools;
 import entity.ArticleEntity;
 import entity.LikeEntity;
 import entity.UserEntity;
 import newspaper_main.HomePageNewsPaperApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.context.ApplicationContextInitializer;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import repository.LikeRepository;
 
 @SpringBootTest(classes = HomePageNewsPaperApplication.class)
-@ContextConfiguration(initializers = {LikeServiceTest.Initializer.class})
+@ContextConfiguration(initializers = {PSQLContainer.Initializer.class})
 @Testcontainers
-public class LikeServiceTest {
+public class LikeServiceTest extends PSQLContainer{
 
     @Autowired
     LikeService likeService;
@@ -32,27 +25,7 @@ public class LikeServiceTest {
     @Autowired
     ArticleService articleService;
     @Autowired
-    AssertsTools assertsTools;
-    @Autowired
     LikeRepository likeRepository;
-
-    @Container
-    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13")
-            .withDatabaseName("likes")
-            .withUsername("samapozitiff")
-            .withPassword("DocGironimo248");
-
-    static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
-        @Override
-        public void initialize(ConfigurableApplicationContext applicationContext) {
-            TestPropertyValues.of(
-                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
-                    "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-                    "spring.datasource.password=" + postgreSQLContainer.getPassword(),
-                    "spring.liquibase.enabled=true"
-            ).applyTo(applicationContext.getEnvironment());
-        }
-    }
 
     @Transactional
     @Test
@@ -63,8 +36,8 @@ public class LikeServiceTest {
         articleService.save(article);
         LikeEntity like = likeService.newLike(article, user);
         likeService.like(article, user);
-        Assertions.assertTrue(assertsTools.compareArticle(like.getArticle(), likeService.getLike(article, user).getArticle()));
-        Assertions.assertTrue(assertsTools.compareUser(like.getUser(), likeService.getLike(article, user).getUser()));
+        Assertions.assertTrue(like.getArticle().equals(likeService.getLike(article, user).getArticle()));
+        Assertions.assertTrue(like.getUser().equals(likeService.getLike(article, user).getUser()));
 
     }
 
@@ -77,8 +50,8 @@ public class LikeServiceTest {
         articleService.save(article);
         LikeEntity like = likeService.newLike(article, user);
         likeService.like(article, user);
-        Assertions.assertTrue(assertsTools.compareArticle(like.getArticle(), likeService.getLike(article, user).getArticle()));
-        Assertions.assertTrue(assertsTools.compareUser(like.getUser(), likeService.getLike(article, user).getUser()));
+        Assertions.assertTrue(like.getArticle().equals(likeService.getLike(article, user).getArticle()));
+        Assertions.assertTrue(like.getUser().equals(likeService.getLike(article, user).getUser()));
         likeService.dislike(article, user);
         Assertions.assertTrue(likeService.getLike(article, user) == null);
     }
@@ -94,8 +67,8 @@ public class LikeServiceTest {
         expect.setArticle(article);
         expect.setUser(user);
         LikeEntity result = likeService.newLike(article, user);
-        Assertions.assertTrue(assertsTools.compareArticle(expect.getArticle(), result.getArticle()));
-        Assertions.assertTrue(assertsTools.compareUser(expect.getUser(), result.getUser()));
+        Assertions.assertTrue(expect.getArticle().equals(result.getArticle()));
+        Assertions.assertTrue(expect.getUser().equals(result.getUser()));
 
     }
 
@@ -136,8 +109,8 @@ public class LikeServiceTest {
         expect.setUser(user);
         expect.setArticle(article);
         likeService.like(article, user);
-        Assertions.assertTrue(assertsTools.compareArticle(expect.getArticle(), likeService.getLike(article,user).getArticle()));
-        Assertions.assertTrue(assertsTools.compareUser(expect.getUser(), likeService.getLike(article,user).getUser()));
+        Assertions.assertTrue(expect.getArticle().equals(likeService.getLike(article,user).getArticle()));
+        Assertions.assertTrue(expect.getUser().equals(likeService.getLike(article,user).getUser()));
 
     }
 }

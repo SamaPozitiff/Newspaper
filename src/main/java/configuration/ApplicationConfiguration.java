@@ -23,6 +23,7 @@ public class ApplicationConfiguration {
         dataSource.setUsername("postgres");
         dataSource.setPassword("Gironimo248");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/newspaper?createDatabaseIfNotExist=true");
+        //dataSource.setUrl("jdbc:postgresql://dbpostgresql:5432/newspaper?createDatabaseIfNotExist=true");
         return dataSource;
     }
 }

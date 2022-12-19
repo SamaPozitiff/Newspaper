@@ -41,7 +41,9 @@ public class ArticleMapperImpl implements ArticleMapper{
 
 
     private byte[] imageToByteArray (String path) throws IOException {
-
+        if(path == null){
+            return null;
+        }
         File file = new File(path);
         return Files.readAllBytes(Paths.get(file.getAbsolutePath()));
 
