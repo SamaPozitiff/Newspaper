@@ -1,6 +1,6 @@
 package controller;
 
-import jwt_auth.RegistrationForm;
+import jwt.auth.RegistrationForm;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import repository.UserRepository;

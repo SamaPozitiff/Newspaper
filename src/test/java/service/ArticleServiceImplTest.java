@@ -2,7 +2,7 @@ package service;
 
 import entity.ArticleEntity;
 import entity.UserEntity;
-import newspaper_main.HomePageNewsPaperApplication;
+import newspaper.main.HomePageNewsPaperApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,15 +19,15 @@ import java.util.List;
 @SpringBootTest(classes = HomePageNewsPaperApplication.class)
 @ContextConfiguration(initializers = {PSQLContainer.Initializer.class})
 @Testcontainers
-public class ArticleServiceTest extends PSQLContainer{
+public class ArticleServiceImplTest extends PSQLContainer{
 
     @Test
     @Transactional
     public void testAddArticle(ApplicationContext ctx){
-        UserService userService = (UserService) ctx.getBean("userService");
+        UserService userService = (UserServiceImpl) ctx.getBean("userServiceImpl");
         UserEntity user = userService.newUser("user@mail.ru", "test", "first name", "last_name", "ROLE_USER");
         userService.save(user);
-        ArticleService articleService = (ArticleService) ctx.getBean("articleService");
+        ArticleService articleService = (ArticleServiceImpl) ctx.getBean("articleServiceImpl");
         ArticleEntity article1 = articleService.newArticle("title 1", "src/main/resources/image1.png", "Description 1", user);
         Calendar date = new GregorianCalendar();
         date.add(Calendar.DAY_OF_YEAR, -2);

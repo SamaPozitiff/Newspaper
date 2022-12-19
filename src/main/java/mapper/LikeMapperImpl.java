@@ -2,7 +2,7 @@ package mapper;
 
 import entity.LikeEntity;
 import org.springframework.stereotype.Component;
-import rest_dto.LikeDTO;
+import rest.dto.LikeDTO;
 @Component
 public class LikeMapperImpl implements LikeMapper{
 

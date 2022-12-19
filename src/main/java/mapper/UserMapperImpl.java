@@ -2,7 +2,7 @@ package mapper;
 
 import entity.UserEntity;
 import org.springframework.stereotype.Component;
-import rest_dto.UserDTO;
+import rest.dto.UserDTO;
 @Component
 public class UserMapperImpl implements UserMapper{
 

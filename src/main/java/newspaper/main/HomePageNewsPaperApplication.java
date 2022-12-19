@@ -1,4 +1,4 @@
-package newspaper_main;
+package newspaper.main;
 
 import entity.ArticleEntity;
 import entity.UserEntity;
@@ -7,14 +7,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import service.ArticleService;
-import service.CommentService;
-import service.LikeService;
-import service.UserService;
+import service.*;
 
 
 @SpringBootApplication(scanBasePackages={
-        "newspaper_main", "repository", "entity", "controller", "service", "jwt_auth", "mapper","configuration", "facade"})
+        "newspaper.main", "repository", "entity", "controller", "service", "jwt.auth", "mapper","configuration", "facade"})
 public class HomePageNewsPaperApplication {
 
     public static void main(String[] args) {

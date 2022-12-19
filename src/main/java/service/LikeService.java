@@ -3,69 +3,18 @@ package service;
 import entity.ArticleEntity;
 import entity.LikeEntity;
 import entity.UserEntity;
-import lombok.NonNull;
-import repository.LikeRepository;
-import org.springframework.stereotype.Service;
 
-@Service
-public class LikeService {
-    LikeRepository repository;
-    UserService userService;
-    ArticleService articleService;
+public interface LikeService {
 
-    public LikeService(LikeRepository repository, UserService userService,
-                       ArticleService articleService) {
-        this.repository = repository;
-        this.userService = userService;
-        this.articleService = articleService;
-    }
+    void like(ArticleEntity article, UserEntity user);
 
-    public void like(ArticleEntity article, UserEntity user){
-        save(newLike(article,user));
-    }
+    void dislike(ArticleEntity article, UserEntity user);
 
-    public void dislike(ArticleEntity article, UserEntity user){
-        delete(article, user);
-    }
+    LikeEntity newLike(ArticleEntity article, UserEntity user);
 
-    public LikeEntity newLike(ArticleEntity article, UserEntity user){
-        LikeEntity like = new LikeEntity();
-        like.setArticle(article);
-        like.setUser(user);
-        return like;
-    }
+    long getAmountLikesFromArticle(long id);
 
-    /*
-    получение количества лайков на статье
-     */
-    public long getAmountLikesFromArticle(long id){
-        return repository.getAmountLikesFromArticle(id);
-    }
-    /*
-    проверка лайкнул ли текущий авторизованный пользователь статью
-     */
-    public boolean isUserLikeThisArticle(ArticleEntity article, UserEntity user){
-        return repository.isUserLikeThisArticle(user.getId(), article.getId()) > 0;
-    }
+    boolean isUserLikeThisArticle(ArticleEntity article, UserEntity user);
 
-    /*
-    сохранить лайк
-     */
-
-    private void save (@NonNull LikeEntity like){
-        repository.save(like);
-    }
-
-    private void delete(@NonNull ArticleEntity article, @NonNull UserEntity user){
-        repository.delete(getLike(article, user));
-    }
-
-    public LikeEntity getLike(ArticleEntity article, UserEntity user){
-        try {
-            return repository.getLike(article.getId(), user.getId());
-        }catch (Exception ex){
-            return null;
-        }
-    }
-
+    LikeEntity getLike(ArticleEntity article, UserEntity user);
 }

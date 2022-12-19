@@ -1,18 +1,15 @@
 package facade;
 
-import jwt_auth.SecurityConfig;
+import jwt.auth.SecurityConfig;
 import mapper.*;
-import newspaper_main.HomePageNewsPaperApplication;
+import newspaper.main.HomePageNewsPaperApplication;
 import entity.ArticleEntity;
 import entity.CommentEntity;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import service.ArticleService;
-import service.CommentService;
-import service.LikeService;
-import service.UserService;
+import service.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,14 +26,14 @@ public class FacadeTest {
             "4, 2"
     })
     void testHomage(int articles, int comments) throws IOException {
-        ArticleService articleService = Mockito.mock(ArticleService.class);
-        CommentService commentService = Mockito.mock(CommentService.class);
-        LikeService likeService = Mockito.mock(LikeService.class);
-        UserService userService = Mockito.mock(UserService.class);
+        ArticleService articleService = Mockito.mock(ArticleServiceImpl.class);
+        CommentService commentService = Mockito.mock(CommentServiceImpl.class);
+        LikeService likeService = Mockito.mock(LikeServiceImpl.class);
+        UserService userService = Mockito.mock(UserServiceImpl.class);
         SecurityConfig securityConfig = Mockito.mock(SecurityConfig.class);
         ArticleMapper articleMapper = Mockito.mock(ArticleMapperImpl.class);
         CommentMapper commentMapper = Mockito.mock(CommentMapperImpl.class);
-        NewspaperFacade newspaperFacade = new NewspaperFacade(articleService, commentService, likeService, userService, securityConfig, articleMapper, commentMapper);
+        NewspaperFacade newspaperFacade = new NewspaperFacadeImpl(articleService, commentService, likeService, userService, securityConfig, articleMapper, commentMapper);
         List<ArticleEntity> articlesList = new ArrayList<>();
         int i = 0;
         while (i < articles){

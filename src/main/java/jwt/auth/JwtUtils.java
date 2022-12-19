@@ -1,4 +1,4 @@
-package jwt_auth;
+package jwt.auth;
 
 import entity.UserEntity;
 import io.jsonwebtoken.Claims;

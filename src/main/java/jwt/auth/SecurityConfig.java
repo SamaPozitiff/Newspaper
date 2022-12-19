@@ -1,4 +1,4 @@
-package jwt_auth;
+package jwt.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

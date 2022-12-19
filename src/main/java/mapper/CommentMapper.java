@@ -1,7 +1,7 @@
 package mapper;
 
 import entity.CommentEntity;
-import rest_dto.CommentDTO;
+import rest.dto.CommentDTO;
 
 public interface CommentMapper {
     CommentDTO toCommentDTO(CommentEntity commentEntity);

@@ -3,7 +3,7 @@ package service;
 import entity.ArticleEntity;
 import entity.LikeEntity;
 import entity.UserEntity;
-import newspaper_main.HomePageNewsPaperApplication;
+import newspaper.main.HomePageNewsPaperApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +16,14 @@ import repository.LikeRepository;
 @SpringBootTest(classes = HomePageNewsPaperApplication.class)
 @ContextConfiguration(initializers = {PSQLContainer.Initializer.class})
 @Testcontainers
-public class LikeServiceTest extends PSQLContainer{
+public class LikeServiceImplTest extends PSQLContainer{
 
     @Autowired
     LikeService likeService;
     @Autowired
     UserService userService;
     @Autowired
-    ArticleService articleService;
+    ArticleService ArticleService;
     @Autowired
     LikeRepository likeRepository;
 
@@ -32,12 +32,12 @@ public class LikeServiceTest extends PSQLContainer{
     public void like(){
         UserEntity user = userService.newUser("email", "password", "firstname", "lastname", "ROLE_USER");
         userService.save(user);
-        ArticleEntity article = articleService.newArticle("title", "image", "description", user);
-        articleService.save(article);
+        ArticleEntity article = ArticleService.newArticle("title", "image", "description", user);
+        ArticleService.save(article);
         LikeEntity like = likeService.newLike(article, user);
         likeService.like(article, user);
-        Assertions.assertTrue(like.getArticle().equals(likeService.getLike(article, user).getArticle()));
-        Assertions.assertTrue(like.getUser().equals(likeService.getLike(article, user).getUser()));
+        Assertions.assertEquals(like.getArticle(), likeService.getLike(article, user).getArticle());
+        Assertions.assertEquals(like.getUser(), likeService.getLike(article, user).getUser());
 
     }
 
@@ -46,14 +46,14 @@ public class LikeServiceTest extends PSQLContainer{
     public void dislike(){
         UserEntity user = userService.newUser("email", "password", "firstname", "lastname", "ROLE_USER");
         userService.save(user);
-        ArticleEntity article = articleService.newArticle("title", "image", "description", user);
-        articleService.save(article);
+        ArticleEntity article = ArticleService.newArticle("title", "image", "description", user);
+        ArticleService.save(article);
         LikeEntity like = likeService.newLike(article, user);
         likeService.like(article, user);
-        Assertions.assertTrue(like.getArticle().equals(likeService.getLike(article, user).getArticle()));
-        Assertions.assertTrue(like.getUser().equals(likeService.getLike(article, user).getUser()));
+        Assertions.assertEquals(like.getArticle(), likeService.getLike(article, user).getArticle());
+        Assertions.assertEquals(like.getUser(), likeService.getLike(article, user).getUser());
         likeService.dislike(article, user);
-        Assertions.assertTrue(likeService.getLike(article, user) == null);
+        Assertions.assertNull(likeService.getLike(article, user));
     }
 
     @Transactional
@@ -61,14 +61,14 @@ public class LikeServiceTest extends PSQLContainer{
     public void newLike(){
         UserEntity user = userService.newUser("email", "password", "firstname", "lastname", "ROLE_USER");
         userService.save(user);
-        ArticleEntity article = articleService.newArticle("title", "image", "description", user);
-        articleService.save(article);
+        ArticleEntity article = ArticleService.newArticle("title", "image", "description", user);
+        ArticleService.save(article);
         LikeEntity expect = new LikeEntity();
         expect.setArticle(article);
         expect.setUser(user);
         LikeEntity result = likeService.newLike(article, user);
-        Assertions.assertTrue(expect.getArticle().equals(result.getArticle()));
-        Assertions.assertTrue(expect.getUser().equals(result.getUser()));
+        Assertions.assertEquals(expect.getArticle(), result.getArticle());
+        Assertions.assertEquals(expect.getUser(), result.getUser());
 
     }
 
@@ -77,8 +77,8 @@ public class LikeServiceTest extends PSQLContainer{
     public void getAmountLikesFromArticles(){
         UserEntity user = userService.newUser("email", "password", "firstname", "lastname", "ROLE_USER");
         userService.save(user);
-        ArticleEntity article = articleService.newArticle("title", "image", "description", user);
-        articleService.save(article);
+        ArticleEntity article = ArticleService.newArticle("title", "image", "description", user);
+        ArticleService.save(article);
         for(int i = 0; i < 5; i++){
             UserEntity userForLike = userService.newUser("email" + i + "@mail.ru", "password", "firstname", "lastname", "ROLE_USER");
             userService.save(userForLike);
@@ -92,8 +92,8 @@ public class LikeServiceTest extends PSQLContainer{
     public void isUserLikeThisArticle(){
         UserEntity user = userService.newUser("email", "password", "firstname", "lastname", "ROLE_USER");
         userService.save(user);
-        ArticleEntity article = articleService.newArticle("title", "image", "description", user);
-        articleService.save(article);
+        ArticleEntity article = ArticleService.newArticle("title", "image", "description", user);
+        ArticleService.save(article);
         likeService.like(article, user);
         Assertions.assertTrue(likeService.isUserLikeThisArticle(article, user));
     }
@@ -103,14 +103,14 @@ public class LikeServiceTest extends PSQLContainer{
     public void getLike(){
         UserEntity user = userService.newUser("email", "password", "firstname", "lastname", "ROLE_USER");
         userService.save(user);
-        ArticleEntity article = articleService.newArticle("title", "image", "description", user);
-        articleService.save(article);
+        ArticleEntity article = ArticleService.newArticle("title", "image", "description", user);
+        ArticleService.save(article);
         LikeEntity expect = new LikeEntity();
         expect.setUser(user);
         expect.setArticle(article);
         likeService.like(article, user);
-        Assertions.assertTrue(expect.getArticle().equals(likeService.getLike(article,user).getArticle()));
-        Assertions.assertTrue(expect.getUser().equals(likeService.getLike(article,user).getUser()));
+        Assertions.assertEquals(expect.getArticle(), likeService.getLike(article, user).getArticle());
+        Assertions.assertEquals(expect.getUser(), likeService.getLike(article, user).getUser());
 
     }
 }

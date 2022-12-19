@@ -1,7 +1,7 @@
 package mapper;
 
 import entity.UserEntity;
-import rest_dto.UserDTO;
+import rest.dto.UserDTO;
 
 public interface UserMapper {
 

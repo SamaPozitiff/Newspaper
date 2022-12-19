@@ -2,7 +2,7 @@ package mapper;
 
 import entity.CommentEntity;
 import org.springframework.stereotype.Component;
-import rest_dto.CommentDTO;
+import rest.dto.CommentDTO;
 
 @Component
 public class CommentMapperImpl implements CommentMapper{

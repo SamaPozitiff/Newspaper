@@ -3,8 +3,8 @@ package controller;
 import facade.NewspaperFacade;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import rest_dto.ArticleDTO;
-import rest_dto.CommentDTO;
+import rest.dto.ArticleDTO;
+import rest.dto.CommentDTO;
 
 import java.io.IOException;
 import java.util.List;

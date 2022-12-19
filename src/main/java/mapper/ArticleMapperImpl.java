@@ -2,8 +2,8 @@ package mapper;
 
 import entity.ArticleEntity;
 import org.springframework.stereotype.Component;
-import rest_dto.ArticleDTO;
-import rest_dto.CommentDTO;
+import rest.dto.ArticleDTO;
+import rest.dto.CommentDTO;
 
 
 import java.io.File;

@@ -1,4 +1,4 @@
-package rest_dto;
+package rest.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

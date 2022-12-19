@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import service.AuthService;
-import jwt_auth.JwtRequest;
-import jwt_auth.JwtResponse;
-import jwt_auth.RefreshJwtRequest;
+import jwt.auth.JwtRequest;
+import jwt.auth.JwtResponse;
+import jwt.auth.RefreshJwtRequest;
 
 import javax.security.auth.message.AuthException;
 

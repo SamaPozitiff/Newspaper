@@ -1,7 +1,7 @@
 package mapper;
 
 import entity.LikeEntity;
-import rest_dto.LikeDTO;
+import rest.dto.LikeDTO;
 
 
 public interface LikeMapper {

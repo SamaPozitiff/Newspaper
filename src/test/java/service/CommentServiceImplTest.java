@@ -3,7 +3,7 @@ package service;
 import entity.ArticleEntity;
 import entity.CommentEntity;
 import entity.UserEntity;
-import newspaper_main.HomePageNewsPaperApplication;
+import newspaper.main.HomePageNewsPaperApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,9 @@ import java.util.List;
 @SpringBootTest(classes = HomePageNewsPaperApplication.class)
 @ContextConfiguration(initializers = {PSQLContainer.Initializer.class})
 @Testcontainers
-public class CommentServiceTest extends PSQLContainer{
-    @Autowired    CommentService commentService;
+public class CommentServiceImplTest extends PSQLContainer{
+    @Autowired
+    CommentService commentService;
     @Autowired
     CommentRepository commentRepository;
     @Autowired
